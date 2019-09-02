@@ -6,6 +6,12 @@ Primero se debe configurar el usuario y el correo, abra el cmd y ejecute los sig
 
 	Nota: se especifica el nombre del usuario y el correo
 
+Para crear un repositorio nuevo siga los siguientes pasos.
+	1.-Entre con su cuenta a GITHUB
+	2.-De clic el botón "+" de arriba a la derecha y seleccione la opción New Repository
+	3.- Escriba un nombre, elija si es público o privado y opcionalmente una descripción.
+	Nota: La opción Initialize this repository with a README" regularmente se deja desmarcada
+
 Luego para subir la carpeta del codigo del proyecto ir a la carpeta donde se encuentra en el proyecto y ejecutar el
 siguiente comando.
 

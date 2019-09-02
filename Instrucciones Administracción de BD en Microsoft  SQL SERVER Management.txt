@@ -1,0 +1,27 @@
+******Para generar el script de creación de la BD realice lo siguiente:******
+
+	1.-De clic derecho sobre la BD y de clic en Script Database as
+	2.-De clic en la opción que le convenga:
+		 a) DROP and CREATE To (Se incluira el script de eliminación de la BD)
+		 b) CREATE To (No contiene el script de eliminación de la BD)
+	3.-Seleccione la opción que prefiera de generación del script.
+
+******Para generar el script de objetos de la BD realice lo siguiente:******
+
+	1.-De clic derecho sobre la BD y de clic en la opción Task>Generate Scripts
+	2.-Pulse siguiente en el asistente y después de clic en siguiente si desea generar el script de todos los objetos, o pulse
+		en la opción Seleccionar objectos especificos de la BD si desea incluir solo algunos
+	3.-De clic en siguiente y seleccione la opción de obtención del script que se generara
+	4.- De clic en la opción avanzadas:
+
+		En la opción Tipo de datos de script Seleccione lo siguiente según convenga:
+
+			a)Solo esquema (Permitira incluir solo los script de los objetos de la BD)
+			b)Solo Datos (Permitira inluir solo los scripts de los datos de las tablas)
+			c)Esquema y datos (Se incluiran los script de los objetos y los datos de las tablas)
+
+		En la opción Script Indexes seleccione true par aque se incluyan los indices.	
+		Nota: Revice las demás opciones para que tambien se incluyan,si en su BD hay Triggers seleccione a True 
+			la opción Script Trigger.
+
+	5.- De clic en siguiente y espere a que se genere el script.
