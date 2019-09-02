@@ -1,0 +1,29 @@
+Intrucciones para instalar Serverless Framework
+--En windows como paso uno hay que tener instalado Node y verificar que contenga la opción npm, ya que se ocuparan 
+--comandos npm para instalar el Serverless Framework
+
+Posteriormente de instalarlo, abra el cmd y ejecute el siguiente comando para verificar la versión de npm:
+
+	npm -v
+
+Para instalarlo npm en el power shell, ejecute el siguiente comando en el cmd:
+
+	npm install --save powershell
+	
+Para crear un proyecto de Serverless Framework, situese en la ruta donde generara su proyecto y ejecute el siguiente
+comando:
+
+	serverless create --template aws-nodejs --name awsProjectSls
+
+	Nota:aws-node es el nombre de la plantilla y awsProjectSls es el nombre del proyecto
+
+Para abrir un proyecto en linux con Atom ejecute los siguientes comandos
+
+	atom .
+	npm init -y
+
+En caso de que se trabaje con windows, abra Atom, de clic en File > Open Folder y seleccione la carpeta del proyecto
+
+Para desplegar los cambios debe situarse en la carpeta del proyectos en el cmd y ejecutar la siguiente instarucción:
+
+	serverless deploy

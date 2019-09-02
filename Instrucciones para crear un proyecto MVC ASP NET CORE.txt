@@ -1,0 +1,63 @@
+"Data Source=201701839-POAC\\SQLEXPRESS;Initial Catalog=Persons;Integrated Security=True"
+
+*******Para crear una Base de datos por CodeFirst*****************
+1.- Crear Clase en la carpeta Models
+Public Class Person
+{
+	public int ID {get; set;}
+	public string Name {get; set;}
+	public int Age {get; set;}
+	public int Sex {get; set;}
+}
+
+2.-Crear una clase en Model llamada ApplicactionDBContext:DBContext
+
+public Class ApplicationDBContext: DbContext{
+       
+	public ApplicationDBContext():
+	base("DefaultConnection")
+	{
+		
+	}
+	public DbSet<persona> Persona {get;set;}
+}
+
+3.- Ejecutar en la Consola de Nugget
+
+	enable-migrations
+
+4.- update-database
+*****************************************
+
+*****************************************
+
+*Para migrar  el modelo a la base de datos hay que abrir el cmd y situarse en la carpeta antes de model, y 
+ejecutar el siguiente comando:
+	dotnet ef migrations add Initial
+
+*Y para confirmar ejecute el siguiente comando
+	dotnet ef database update
+
+ 	Nota: Para remover una migracion, ejecute el comando dotnet ef migrations remove
+
+
+		services.Configure<CookiePolicyOptions>(options =>
+			{
+				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
+				options.CheckConsentNeeded = context => true;
+				options.MinimumSameSitePolicy = SameSiteMode.None;
+			});
+
+ProyectoMVC asp net core
+
+Usuario: Popocas21
+Contraseña: Prueba10$
+
+https://anexsoft.com/principios-de-solid-con-ejemplos-c
+
+--Curso ASP NET CORE
+https://www.youtube.com/watch?v=pa2KGjIDwx8&list=PLfkODrpjGnhm_I-65BbdhPoSd84qIqxUL&index=25
+
+--Curso ASP NET
+https://www.youtube.com/watch?v=guXU53g6v50
+https://www.youtube.com/watch?v=88evtU4ZGeY

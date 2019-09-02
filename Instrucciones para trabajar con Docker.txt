@@ -1,0 +1,266 @@
+
+--Conceptos basicos---
+
+Imagen. Es un archivo base que contiene un sistema operativo instalado /o programas ya instalados
+Contenedor. Es la instancia que se genera por medio de una imagen, se pueden tener las que se deseen
+Dockerfile. Es un archivo que servira para generan una imagen con un conjunto de comandos
+DockerRegister. Repositorio donde se almacenaran las imagenes,
+	 hay contenedores publicos y gratuitos de docker, como docker hub https://hub.docker.com/
+
+
+
+--Para ver la version de docker, si no muestra la versión ejecute el Docker Quickstart Terminal(acceso
+	directo que se genera cuando se instala DockerToolbox)
+
+	 docker version
+
+--Para descargar imagenes, puede ser a través de la terminal y ver el nombre exacto en hub.docker.com
+
+ejemplo:
+
+	  docker pull ubuntu
+
+--Para ver las imagenes descargadas
+	docker images
+
+
+--Para crear un contenedor para una imagen 
+
+	docker run -it ubuntu:1604 /bin/bash
+ 	
+	nombre imagen: ubuntu	tag: 1604	it(significa contenerdor iterativo)
+
+
+--Para configurar el contenedor de linux, propablemente no funcione el ifconfig ni otro comando para instalar como
+-- el apt-get install nano, que es para un edit de texto, si es el caso ejecutar lo siguiente
+
+	apt-get update
+
+--Para correr una imagen
+	docker run hello-world
+
+--Para ver los contenedores que se ejecutan
+	docker ps
+
+--Para ver los contenedores que se ejecutan su estado
+	docker ps -a
+
+--Para detener contenedores 
+
+	docker stop 02
+--Para eliminar contenedores, antes se debe detener 
+
+	docker rm 02
+	Nota:las primeras dos letras del id del contenedor
+
+--Para ver la raiz de una imagen ubuntu
+	docker run ubuntu ls
+	Nota: docker run crea de forma temporal un contenedor para que se pueda permitir ejecutar lo que se solicita
+	pero si se quiere que un contenedor dure mucho tiempo se debe ejecutar con docker run -it
+	
+
+--Para limpiar la pantalla de docker
+	Clear
+
+--Para detener un contenedor iterativo
+	docker stop 3sas3421as
+	Nota: 3sas3421as, es el id del contenedor, si ya no desea el contenedor puede eliminarlo
+--Para salir de la terminal de docker
+	Clear
+--Para arrancar un contenedor que fue detenido
+	docker start -ai 539bc1531d73
+	Nota 539bc1531d73, es el id del contenedor, cada contenedor nuevo contiene su propia configuración, cuando
+	se crea un nuevo contenedor parte de la imagen, se tendra que crear una imagen partiendo del contenedor para 
+	tener guardado todo lo que se instalo e hizo
+
+--Para salir del contenedor sin tener que detenerlo
+	Ctrl+pq
+--Para crear una imagen partiendo de un contenedor
+	docker commit 539bc1531d73 nombreImage
+
+sudo apt-get update –fix-missing
+	Nota: 539bc1531d73 es el id del contenedor, nombreImage es el nombre que se le pondra a la imagen
+
+***************************************************************************************************************
+--Para crear una imagen partiendo de un contenedor ubuntu y que tiene un servidor apache, pero cuando se le haga 
+un contenedor a esta nueva imagen ejecute en automatico el servidor apache se debe ejecutar el siguiente comando:
+
+	Salir sin detener el contenedor con Ctrl+pq
+	Docker commit --change='CMD ["apache2ctl","-D FOREGROUND"]' -c "EXPOSE 85" 2343adasd434s apache2
+
+	Nota: apache2ctl, es el servicio que ejecutara, EXPOSE 85 es el puerto del servicio, 2343adasd434s  es el id
+	del contenedor, apache2 es el nombre de la imagen
+
+--Para crear un contenedor a la imagen que ejecuta un servidor de apache en automatico ejecute lo siguiente:
+
+	docker run -d -p 5000:80 apache2
+	Nota: -p para especificar el puerto que se especificara para desplegar el servidor apache a través del
+	navegador, probar http://localhost:5000
+
+--Para eliminar una imagen
+
+	docker rmi 12dadas43
+        Nota: 12dadas43 es el id de la imagen, pero para poder eliminar una imagen antes debe detener y borrar
+	todos sus contenedores
+
+--Para forzar la eliminación de una imagen 
+
+	docker rmi -f 12dadas43
+--Para crear imagenes partiendo de un Dockerfile (es un archivo que contiene comando para la creación de una imagen y se debe llamar Dockerfile)
+
+docker 	 C:\Docker -t mongodb_image
+
+	Nota: C:\Docker es la ruta donde se encuentra el archivo llamado Dockerfile y por default busca en la ruta que el archivo 
+	nombrado de esa forma exista, ademas debe ser un archivo sin extensión, mongodb_image es el nombre que se le asignara a la imagen
+
+--Para listar imagenes
+
+docker image ls
+
+--Para listar contenedores
+
+docker container ls
+
+--Para crear un contenedor con nombre y puerto
+
+docker run --restart=always --name mongodbcontainer -p 27017:27017 mongodb_imagen
+
+docker run --restart always --name apachecontainer -d -p 5000:80 apache2
+
+Nota: delante de --name va el nombre y delante del puerto va el nombre de la imagen, restart reinicia el contenedor cada 10 minutos
+
+--Para  renombar un contenedor 
+
+docker container rename kind_tu bootdockercontainer
+
+--Para reiniciar la maquina virtual de docker
+
+docker-machine restart
+
+	Nota: Enseguida del rename va el nombre del contenedor y después el nombre que tendra
+
+--Para entrar a un contenedor 
+
+docker exec -i -t 665b4a1e17b6 /bin/bash
+
+	Nota: 665b4a1e17b6 es el id del contenedor, puede ser el nombre
+
+**************************Para trabajar con contenedores en mongo db y aplicación en spring boot**********************************************
+
+Para que el contenedor escuche en el puerto 27017 
+
+docker run -p 27017:27017 mongodb_image
+
+
+*****************************
+
+--para checar que puertos son ocupados en windows
+
+	netstat -naob
+
+--Para checar que aplicacion ocupa un puerto en linux
+
+	netstat -puntl |grep ':22'
+
+--Para instalar ifconfig en linux
+
+	apt-get update
+	apt-get install net-tools
+
+--Para instalar el ping en linux
+
+	apt-get install iputils-ping
+
+--Para interrumpir un ping en linux
+
+	Ctrl + C
+
+--Para crear una imagen apartir de un docker file
+
+	docker build C:\DataArt\Docker\mongodb -t mongodb_image
+
+	Nota: La ruta es donde se econtrala el archivo nombrado Dockerfile y que contendra el codigo para realizar la creación de la imagen,
+	mongodb_image es el nombre que se le dara a la imagen
+
+///////////////////////Ejemplo de codigo de Dockerfile para crear una imagen de ubuntu 16.04/////////////////////////////////////////////
+        FROM       ubuntu:16.04
+
+	# Installation:
+	# Import MongoDB public GPG key AND create a MongoDB list file
+	RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+	RUN echo "deb http://repo.mongodb.org/apt/ubuntu $(cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2)/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+	# Update apt-get sources AND install MongoDB
+	RUN apt-get update && apt-get install -y mongodb-org
+
+	# Create the MongoDB data directory
+	RUN mkdir -p /data/db
+
+	# Expose port #27017 from the container to the host
+	EXPOSE 27017
+
+	# Set /usr/bin/mongod as the dockerized entry-point application
+	ENTRYPOINT ["/usr/bin/mongod"]
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+--Para ejecutar un docker compose, situarse dentro de la carpeta donde se encuentra el archivo docker-compose.yml y ejecutar el siguiente comando:
+
+	Docker-compose up
+
+/////////////////Ejemplo de codigo de un archivo docker-compose que crear dos contenedores partiendo de dos imagenes
+	(una con ubuntu conteniendo la app y una imagen mongo ) ////////////////////////////////////////////////////////////
+
+
+version: '3.1'
+
+services:
+  springboot:
+    build: .
+    restart: always
+    container_name: bootdockercontainer7
+    ports:
+      - 7082:7082
+    working_dir: /opt/app
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongodb_image
+    container_name: mongodbcontainer7
+    ports:
+      - 27017:27017
+    restart: always
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+--Para ver el detalle del docker-machine, ejecute el siguiente comando
+
+	docker-machine env
+
+--Para poder usar imagenes locales de docker en un kubernete local, y asi evitar errores, ejecute el siguiente comando, funciona regularmente
+	en la consola de GIT BASH o desde la consola de docker en windows
+
+	eval $(minikube docker-env)
+
+
+	
+
+
+
+***********Para crear una aplicación spring boot con conexión a mongodb, y desplegarla en contenedores dockers***********
+
+Parte 1
+https://dataart.com.ar/news/como-desplegar-una-aplicacion-springboot-utilizando-docker/
+Parte 2
+https://dataart.com.ar/news/para-que-nos-sirve-docker/
+parte 3
+https://www.dataart.com.ar/news/deploy-de-spring-boot-apps-utilizando-docker/
+
+Para descargar la imagen de mongodb
+https://github.com/docker/docker.github.io/blob/master/engine/examples/mongodb/Dockerfile
+
+En windows se puede saber que ip tienen los contenedores con la aplicación climatic que se instalo junto con docker toolbox
+
+Para descargar maquinas virtuales de ubuntu
+https://descargarmaquinasvirtuales.com/distribuciones/ubuntu/

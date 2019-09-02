@@ -1,0 +1,325 @@
+
+
+**************PARA DE MIGRACIÓN DE TABLAS PARA EL METODO CODE FIRST EN ASP NET FRAMEWORK*******************
+
+**********En la Clase IdentityModel agregue lo siguiente**********
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace WEBASPNETMVCWCFSECIDEN.Models
+{
+    public class ApplicationRole : IdentityRole
+    {
+        public string Description { get; set; }
+    }
+
+    // Para agregar datos de perfil del usuario, agregue más propiedades a su clase ApplicationUser. Visite https://go.microsoft.com/fwlink/?LinkID=317594 para obtener más información.
+    public class ApplicationUser : IdentityUser
+    {
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser,string> manager)
+        {
+            // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Agregar aquí notificaciones personalizadas de usuario
+            return userIdentity;
+        }
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
+    {
+        //Debe especificarse la variable que se creo en el webConfig y que contiene la cadena de Conexión de la Base de Datos personalizada
+        //
+        public ApplicationDbContext()
+            : base("DefaultConnection")
+        {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            //Se configura el nombre de la Columna que contendra el valor del ID para las tablas de User y Role
+            modelBuilder.Entity<ApplicationUser>().ToTable("User").Property(p => p.Id).HasColumnName("UserId");
+            modelBuilder.Entity<ApplicationRole>().ToTable("Role").Property(p => p.Id).HasColumnName("RoleId");
+      
+        }
+    }
+}
+
+****Hacer la migración con CODE FIRST*****
+
+Abrir consola Package Manager Console(Herramientas> Administrador de paquetes Nuget>Consola del Administrador de Paquetes)
+	 y ejecutar los siguientes comandos:
+
+	Enable-Migrations
+	Nota: Para Habilitar las Migraciones
+
+Ejecute el siguiente comando para migrar las tablas de Identity de los Usuarios de ASP NET
+
+	Add-Migration AddingIdentity
+
+Ejecute el siguiente comando para migrar las tablas de Role:
+
+	Add-Migration ApplicationRole
+
+Para confirmar y se suban las tablas de ASPNET, USER y ROLE, ejecute el siguiente comando:
+
+	Update-Database
+
+Si desea volver a aplicar el AddingIdentity debe ejecutar el siguiente comando, y después borrar el archivo de migración
+	de identity que se aloja dentro de la carpeta Migrations:
+
+	Update-Database -TargetMigration $InitialDatabase
+	Nota: el siguiente comando dotnet ef database remove
+
+
+
+***** Vaya a la carpeta App_Start ? Abra IdentityConfig.cs y cambie la clase ApplicationUserManager para derivar de UserManager < ApplicationUser, string >
+	 y también cambie su método Create para devolver un ApplicationUserManager que contemple ApplicationRole:******
+
+ public class ApplicationUserManager : UserManager<ApplicationUser, string >
+    {
+        public ApplicationUserManager(IUserStore<ApplicationUser, string> store)
+            : base(store)
+        {
+        }
+
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        {
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context.Get<ApplicationDbContext>()));
+
+Luego para administrar los roles cree la clase ApplicationRoleManager en el mismo archivo:
+
+ public class ApplicationRoleManager : RoleManager<ApplicationRole>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> store) : base(store) { }
+
+        public static ApplicationRoleManager Create(
+            IdentityFactoryOptions<ApplicationRoleManager> options,
+            IOwinContext context)
+        {
+            return new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
+        }
+    }
+
+El archivo IdentityConfig.cs quedara como el siguiente:
+
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
+using WEBASPNETMVCWCFSECIDEN.Models;
+
+namespace WEBASPNETMVCWCFSECIDEN
+{
+    public class EmailService : IIdentityMessageService
+    {
+        public Task SendAsync(IdentityMessage message)
+        {
+            // Conecte su servicio de correo electrónico aquí para enviar correo electrónico.
+            return Task.FromResult(0);
+        }
+    }
+
+    public class SmsService : IIdentityMessageService
+    {
+        public Task SendAsync(IdentityMessage message)
+        {
+            // Conecte el servicio SMS aquí para enviar un mensaje de texto.
+            return Task.FromResult(0);
+        }
+    }
+
+    // Configure el administrador de usuarios de aplicación que se usa en esta aplicación. UserManager se define en ASP.NET Identity y se usa en la aplicación.
+    //Cambie la clase ApplicationUserManager para derivar de UserManager < ApplicationUser, string >
+    public class ApplicationUserManager : UserManager<ApplicationUser, string >
+    {
+        public ApplicationUserManager(IUserStore<ApplicationUser, string> store)
+            : base(store)
+        {
+        }
+
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        {
+	   //Se cambia la siguiente linea  para devolver un ApplicationUserManager que contemple ApplicationRole
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context.Get<ApplicationDbContext>()));
+            // Configure la lógica de validación de nombres de usuario
+            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true
+            };
+
+            // Configure la lógica de validación de contraseñas
+            manager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = true,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = true,
+            };
+
+            // Configurar valores predeterminados para bloqueo de usuario
+            manager.UserLockoutEnabledByDefault = true;
+            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+
+            // Registre proveedores de autenticación en dos fases. Esta aplicación usa los pasos Teléfono y Correo electrónico para recibir un código para comprobar el usuario
+            // Puede escribir su propio proveedor y conectarlo aquí.
+            manager.RegisterTwoFactorProvider("Código telefónico", new PhoneNumberTokenProvider<ApplicationUser>
+            {
+                MessageFormat = "Su código de seguridad es {0}"
+            });
+            manager.RegisterTwoFactorProvider("Código de correo electrónico", new EmailTokenProvider<ApplicationUser>
+            {
+                Subject = "Código de seguridad",
+                BodyFormat = "Su código de seguridad es {0}"
+            });
+            manager.EmailService = new EmailService();
+            manager.SmsService = new SmsService();
+            var dataProtectionProvider = options.DataProtectionProvider;
+            if (dataProtectionProvider != null)
+            {
+                manager.UserTokenProvider = 
+                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+            }
+            return manager;
+        }
+    }
+
+    // Configure el administrador de inicios de sesión que se usa en esta aplicación.
+    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
+    {
+        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
+            : base(userManager, authenticationManager)
+        {
+        }
+
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
+        {
+            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+        }
+
+        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
+        {
+            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+    }
+
+   //Se agrega la siguiente Clase para Administrar los roles 
+    public class ApplicationRoleManager : RoleManager<ApplicationRole>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> store) : base(store)
+	{ 
+
+	}
+
+        public static ApplicationRoleManager Create(
+            IdentityFactoryOptions<ApplicationRoleManager> options,
+            IOwinContext context)
+        {
+            return new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
+        }
+    }
+}
+
+******Vaya a la carpeta App_Start ? Abra Startup.Auth.cs y agregue el siguiente código al método ConfigureAuth:
+
+ConfigureAuthapp.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
+La clase quedara de la siguiente Manera:
+
+using System;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Google;
+using Owin;
+using WEBASPNETMVCWCFSECIDEN.Models;
+
+namespace WEBASPNETMVCWCFSECIDEN
+{
+    public partial class Startup
+    {
+        // Para obtener más información sobre cómo configurar la autenticación, visite https://go.microsoft.com/fwlink/?LinkId=301864
+        public void ConfigureAuth(IAppBuilder app)
+        {
+            // Configure el contexto de base de datos, el administrador de usuarios y el administrador de inicios de sesión para usar una única instancia por solicitud
+            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
+            // Permitir que la aplicación use una cookie para almacenar información para el usuario que inicia sesión
+            // y una cookie para almacenar temporalmente información sobre un usuario que inicia sesión con un proveedor de inicio de sesión de terceros
+            // Configurar cookie de inicio de sesión
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    // Permite a la aplicación validar la marca de seguridad cuando el usuario inicia sesión.
+                    // Es una característica de seguridad que se usa cuando se cambia una contraseña o se agrega un inicio de sesión externo a la cuenta.  
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                        validateInterval: TimeSpan.FromMinutes(30),
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                }
+            });            
+            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            // Permite que la aplicación almacene temporalmente la información del usuario cuando se verifica el segundo factor en el proceso de autenticación de dos factores.
+            app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
+
+            // Permite que la aplicación recuerde el segundo factor de verificación de inicio de sesión, como el teléfono o correo electrónico.
+            // Cuando selecciona esta opción, el segundo paso de la verificación del proceso de inicio de sesión se recordará en el dispositivo desde el que ha iniciado sesión.
+            // Es similar a la opción Recordarme al iniciar sesión.
+            app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+
+            // Quitar los comentarios de las siguientes líneas para habilitar el inicio de sesión con proveedores de inicio de sesión de terceros
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: "");
+
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "",
+            //   consumerSecret: "");
+
+            //app.UseFacebookAuthentication(
+            //   appId: "",
+            //   appSecret: "");
+
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "",
+            //    ClientSecret = ""
+            //});
+        }
+    }
+}
+
+Con los pasos mencionados anteriormente el proyecto quedara listo para que las ventanas de seguridad generadas por default al crear el proyecto usen la 
+Base de datos personalizada.
+	
+***Url para decodificar Urls***
+https://meyerweb.com/eric/tools/dencoder/
+
+
+**************Pagina de referencia*********
+https://codeday.me/es/qa/20190629/951646.html

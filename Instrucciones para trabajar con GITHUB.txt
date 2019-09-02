@@ -1,0 +1,89 @@
+
+Primero se debe configurar el usuario y el correo, abra el cmd y ejecute los siguientes comandos.
+
+	git config --global user.name "Carlos Popoca"
+	git config --global user.email popocas21@hotmail.com
+
+	Nota: se especifica el nombre del usuario y el correo
+
+Luego para subir la carpeta del codigo del proyecto ir a la carpeta donde se encuentra en el proyecto y ejecutar el
+siguiente comando.
+
+	git init
+
+Luego, desde la carpeta  haces el comando "add" para agregar todos los archivos al "staging area".
+
+	git add .
+
+Despues se ejecuta e siguiente comando para hacer el commit
+
+	git commit -m "first commit"
+
+	Nota: firs commit, es el comentario qe agregara al commit
+
+Luego especifique a que repositorio de github se añadira todos los archivos
+
+	git remote add origin https://github.com/CarlPopoca/ejemplo.git
+
+Y por ultimo ejecute el siguiente comando para que se comience la carga de archivos
+
+	git push -u origin master
+
+	Nota:pedira el usuario y contraseña.
+
+
+Para listar la configuración ejecute el siguiente comando
+
+	git config --list
+
+
+Para generar clave publica para conectarse por ssh al repositorio GIT, ejecute el programa puttygen.exe,
+Luego seleccione la opción SSH de parameters y de clic en el boton Generate
+
+Para registrar la clave privada ppk en windows, abra la conexion putty, seleccione la url de github para ssh, luego en la pestaña 
+de SSH >auth coloque la ruta del archivo ppk y de clic en el boton open, para mas detalle revise el siguiente link 
+para ver como se hace esto en windows.
+
+
+http://eltallerdelbit.com/ssh-clave-publica-privada
+
+
+Para clonar un repositorio (descargar) ejecute el siguiente comando
+
+	git clone https://github.com/CarlPopoca/ejemplo.git
+
+Para verificar el estatus de su fichero, ver lo que esta trackeado ejecute el siguiente comando
+
+	git status
+
+Si elige usar autenticacion ssh, que es añadir ip publica de ssh y registrar su clave privada en su equipo local y previamente habia descargado su codigo 
+por http debe ejecutar el siguiente comando para especificar la ruta por ssh.
+
+	--Si es en linux
+	nano .git/config
+
+	--Si es por windows busque el archivo .git/config dentro de la carpeta del codigo de su proyecto y abralo para cambiar la url
+
+	.git/config
+Para cancelar cambios hechos aun repositorio descargado, en el cmd situese en la carpeta del proyecto descargado y ejecute el siguiente comando:
+
+	git stash
+Para cambiar a otro branch, en el cmd ejecute el siguiente comando:
+
+	git checkout nombrerepositorio
+
+Para verificar que se cambio de branch, ejecue:
+
+	git branch
+
+-----------------------------------------------------------------------
+Para hacer un merge forzado en caso que arroje el siguiente error:
+
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+Ejecute la siguiente instrucción antes de hacer el push
+git pull origin master --allow-unrelated-histories
+------------------------------------------------------------------------

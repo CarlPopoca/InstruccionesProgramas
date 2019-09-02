@@ -1,0 +1,48 @@
+***Url para bajar Spring 
+http://spring.io/
+
+***Para bajar el Intellij IDEA (IDE de Java)
+
+https://www.jetbrains.com/idea/download/download-thanks.html?platform=windows&code=IIC
+
+***Para bajar el maven
+https://maven.apache.org/download.cgi
+
+***Para hacer un proyecto spring desde el explorador***
+
+start.spring.io
+
+***Para instalar Spring Tool Suite***
+
+https://spring.io/tools3/sts/all
+
+****Url por defecto cuando se instalo Spring Tool Suite****
+
+C:\Users\Praxis\Documents\workspace-sts-3.9.7.RELEASE
+
+***Configuración de variables de entorno***
+
+
+	---Variables del Sistema---
+	GRADLE_HOME	C:\ProgramData\chocolatey\lib\gradle\tools\gradle-5.1.1
+	JAVA_HOME	C:\Program Files\Java\jdk1.8.0_201
+	M2_HOME		C:\Maven\apache-maven-3.6.0
+	Path	%GRADLE_HOME%\bin, %M2_HOME%\bin, %JAVA_HOME%\bin
+
+	---Variables del Usuario---
+	JRE_HOME	C:\Program Files\Java\jdk1.8.0_201\jre
+	Path	C:\Program Files\Java\jdk1.8.0_201\bin
+
+
+***Para poder trabajar con proyectos Gradle en Spring Tool Suite hay que hacer lo siguiente:***
+
+	Ir a Help > Eclipse MarketPlace e introducir en el buscador Buildship y proceder a instalarlo
+
+****Otras Urls para trabajar con Microservicios*****
+https://enmilocalfunciona.io/arquitectura-de-microservicios-parte-2-2/
+https://enmilocalfunciona.io/arquitectura-de-microservicios-parte-3/
+	Url para descargar los archivos de configuración que se menciona en esta url
+	--https://github.com/atSistemas/cygnus-config 	
+https://www.arquitecturajava.com/swagger-documentando-nuestro-api-rest/
+
+***Urls para incorporar spring security para API REST***

@@ -1,0 +1,204 @@
+*****ir a la ruta de openshift y crear cuenta gratuita****
+https://manage.openshift.com/
+
+
+***Instalar ruby****
+https://rubyinstaller.org/downloads/
+
+***Instalar git****
+
+https://gitforwindows.org/
+
+***comandos a ejecutar en la consola****
+
+	Para verificar la version de ruby
+		ruby -v
+	Para instalar rhc
+		gem install rhc
+**Para configurar el rhc y se pueda crear namespace de dominio en openshift y crear y subir las llaves necesarias para
+autenticar los servicios
+
+	rhc setup
+
+	--Dejar el servidor hostname que aparece por defecto en este caso es el de Openshift.redhat.com
+
+	Posteriormente hacer login con nuestro usuario y contraseña de Openshift}
+
+
+*****Para crear aplicaciones*****
+
+rhc app create primerapp php-5.4
+
+***Para agregar un archivo nuevo al repositorio git local***
+	git add hola.php
+	git commit -am "add hola.php"
+**Para agregar el archivo al repositorio git online***
+	git push
+
+
+***Para crear una aplicacion wordpress***
+
+	Hacerlo desde la web logeando y escogiendo wordpress
+	Luego copiar los datos que aparecen del usuario y contraseña de la aplicación
+	Dar clic en la url y seleccionar el idioma e introducir los datos que se solicitan, como:
+	Usuario, password etc
+	Posteriormente se puede proceder ya a personalizar el wordpress
+
+***Clonar repositorio de aplicación wordpress***
+
+	Ejecutar un cmd e ir a la ruta donde clonaremos nuestro codigo para hacer los cambios, y ejecutar los comandos:
+
+	rhc app show miblog
+
+	La intrucción anterior proporciona la url de nuestro sitio que tenemos que copiar para ejecutar el siguiente
+	comando:
+
+	git clone ssh://123412341324132441456@miblog-cursoopen.rhcloud.com/git/miblog.git
+
+	otra forma de hacerlo es con la siguiente instrucción:
+	rhc git-clone miblog
+
+***Comandos de rhc********
+	
+	Para crear y administrar aplicaciones en la plataforma:
+	rhc app
+	Para configurar propiedades que aplicaran a una aplication
+	rhc app configure
+	Para eliminar una aplicación del servidor
+	rhc app delete
+	para hacer que una aplicación tenga alta disponibilidad
+	rhc app enable-ha
+	Para detener todos los procesos de la aplicación
+	rhc app force stop
+	Para abrir la configuración de la aplicación
+	rhc app reload
+	para reiniciar la aplicación
+	rhc app restart
+	Para bajar proporcionalmente los cartuchos de aplicaciones web
+	rhc app scale-down
+	Para subir proporcionalmente los cartuchos de aplicaciones web
+	rhc app scale-up
+	Para mostrar información acerca de la aplicación
+	rhc app show
+	para iniciar la aplicación
+	rhc app start
+	para detener la aplicación
+	rhc app stop
+	Para limpiar los logs y archivos temporales de una aplicación.
+	rhc app tidy	
+	Para listar todas las aplicaciones que se tengan
+	rhc apps
+	
+
+	Con la anotación --confirm ya no se pregunta si se desea confirmar la ejecución del comando, ejemplo de uso
+	rhc app delete miaplicacion --confirm
+
+***Comando para cartridge****
+
+	Para listar los cartuchos, hay dos tipos web(es el lenguaje en tiempo de ejecución, el lenguaje del lado del servidor) y el addon
+	(son cartuchos que complementan la funcionalidad web como son base de datos, herramientas de manejo de BD o planificadores de tareas)
+
+	rhc cartridge list
+
+	Para listar las acciones que podemos ejecutar con cartridge
+	rhc cartridge
+
+	Para crear un aplicación con un cartucho php, ejecutemos el siguiente comando:
+	rhc app create lampstack php-5.4, (lampstack) es el nombre de la aplicación
+
+	Para instalarle a la aplicación lampstack un cartucho mysql ejecutar el siguiente comando:
+	rhc cartridge add mysql-5.5 -a lampstack
+
+	Para crear un cartucho de aplicación y un cartucho addon de mysql en una sola linea de codigo, ejecutar lo siguiente:
+	rhc app create lampstack php-5.4 mysql-5.5
+
+	Para añadir un cartucho que nos permita administrar la BD mysql usando phpadmin ejecute el siguiente comando:
+	rhc cartridge add phpmyadmin-4 -a lampstack
+
+	Guarde el usuario y contraseña root y la url que le proporciono para que pueda acceder
+
+***Para subir cambios al repositorio***
+
+Suponiendo que creo una pagina ph que se conecta a la BD y lista una tabla, use las siguientes sentencias:
+
+	Para agregar los cambios al repositorio online
+	git add .
+	Para publicar los cambios en la nube
+	git push
+
+	Si marca un error pidiendo información configuremos la cuenta con
+	git config --global user.email "tu@email.com"
+
+***Para ejecutar un trabajo en ciertos intervalos de tiempo**
+Para un email, una actualización de hora, para este ejemplo actualizaremos la hora en un txt que se podra ver en el navegador web.
+
+	Situarse en la carpeta raiz del proyecto y ejecutar el siguiente comando:
+
+	rhc cartridge add cron-1.4 -a lampstack
+	
+	Enseguida vaya a la carpeta del proyecto en su explorador, abra la carpeta .Openshift y abra la carpeta cron para añadir
+	dentro de la carpeta minutely un script ejecutable s.h con el siguiente comando.
+
+	date >> $OPENSHIFT_REPO_DIR/crontest.txt
+
+	Posteriormente debe añadirlo al repositorio a través de la consola con el siguiente comando:
+	
+	git add .
+	
+	luego ejecute para hacer el commit
+	
+	git commit -am "add trabajo cron"
+
+
+
+	Y despues ejecute para publicarlo
+	
+	git push
+	
+	Y para probarlo ponga la siguiente url en el navegador
+
+	 urldelapagina/crontest.txt
+
+********Para configurar un entorno de trabajo mean*******************
+
+Configurar entorno de trabajo MEAN en OpenShift. Necesitamos: Git, node.js, npm, MongoDB, grunt, bower, yeoman 
+y generator-angular-fullstack; Hacer scaffold MEAN con Yeoman. 3 minutos,estar en la consola cmd donde tiene o tendra las carpetas
+de codigo de sus aplicativos.
+
+	Comenzar ejecutando el siguiente comando 
+
+	npm install -g grunt grunt cli bower yo generator-angular-fullstack
+
+	Para crear la aplciación con yeoman y hacer con esto scaffold ejecute el siguiente comando.
+
+	yo angular-fullstack openmean
+
+	Si pregunta con lenguaje de java script desea escribir scripts seleccione javascript
+	Si pregunta que tipo de markup vamos a trabajar elegir HTML
+	Si pregunta que hojas de estilo vamos a trabajar escoger css
+	Si pregunta en elegir tipo de route, elegir ngRoute
+	Si pregunta si desea incluir bootstrap, seleccione yes
+	Si pregunta si desea incluir UI bootstrap, seleccionar yes
+	Si pregunta si queremos mongodb con mongoose para el modelado de datos, seleccionar yes
+	Si pregnta si queremos scaffold out como sistema de autenticación, seleccionar yes
+	Si pregunta si desea incluir estrategias de autenticación oAuth, se pueden seleccionar las que se deseen (google, Facebook, Twitter)
+	Si pregunta si queremos usar socket io, seleccionar yes
+
+	Por ultimo para ver la pagina de lo que creo pulsar el siguiente comando
+
+	grunt serve
+
+	Para inicializar el entorno remoto de Openshift pulsar el siguiente comando
+
+	yo angular-fullstack:openshift meanopen 
+	
+	meanoopen es el nombre de la aplicación Openshift que se desa crear, y para desplegar pulsar el siguiente nombre de la aplicación
+
+	meanopen
+
+     
+
+
+
+
+	

@@ -1,0 +1,3 @@
+https://blog.netspi.com/an-introduction-to-opensamm/
+
+https://opensamm.org/downloads/SAMM-1.0.pdf

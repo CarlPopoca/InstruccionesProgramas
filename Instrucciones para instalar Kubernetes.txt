@@ -1,0 +1,269 @@
+
+
+------------CONCEPTOS PRINCIPALES------------------------------------
+
+Cluster: Es un grupo de máquinas u ordenadores, que pueden ser físicos o bien virtuales, 
+que se encuentran unidos muchas veces por una red y que se comportan como una
+
+Kubernettes: Permite olvidarnos de la infraestructura y pensar en aplicaciones y como empaquetarlas, 
+sirve para la gestión y orquestación de contenedores.
+
+Nodo: Es básicamente una máquina que se está ejecutando en Kubernetes, en las cuales se pueden programar Pods.
+
+Pods: Conjunto de contenedores y volúmenes.
+
+Replication Controllers: Gestor de Pods que asegura que están levantadas las réplicas y permite escalar de forma fácil. 
+Una réplica es una copia exacta de un Pod. Levanta Pods en caso de fallos o reinicios.
+
+Service: Define como acceder a un grupo de Pods.************CONCEPTOS KUBERNETTES*******************
+
+-------------COMPONENTES DE NODOS---------------------
+
+Docker: aquí encontramos a Docker, que se utiliza para correr nuestras aplicaciones en un ambiente encapsulado.
+
+Kubelet: es un proceso que se encarga de mantener el estado de trabajo y el nodo mismo. 
+Lee las configuraciones necesarias de etcd y recibe los comandos del nodo maestro que necesite para trabajar, 
+así como también envía el estado del nodo cada pocos segundos. Además también se encarga de los port forwarding, 
+configuraciones de la red, etc.
+
+Kubernetes-proxy: Es quien se encarga de que los servicios se encuentren disponibles para el exterior 
+y también del balanceo de carga y enrutamiento de tráfico por dirección de IP.
+
+-----------COMPONENTES EN NODO MASTER-------------------------
+
+etcd: Es un storage que se encarga de guardar datos de forma persistente, liviana y confiable; 
+Distribuida en forma clave-valor y desarrollada por CoreOS. Contiene la configuración/información de los nodos.
+ Además representa el estado de éstos en punto de tiempo determinado y es accesible solamente por la Api Server de Kubernetes, 
+ debido a que contiene o puede contener información sensible.
+
+Api Server: es quien sirve a la API de Kubernetes, enviando los datos en formato JSON a través de HTTP. 
+Es quien valida y recibe todas las peticiones y actualiza los objetos que se encuentran en etcd.
+
+Scheduler: Es quien se responsabiliza de distribuir la carga. Él se encarga de verificar los recursos utilizado por los nodos y 
+ajustar el uso con los recursos que tenga disponible, es por ello que es uno de los componentes más importantes.
+
+Controller Manager: se puede considerar como un proceso o demonio que se encuentra corriendo continuamente 
+y que además se encarga de recolectar la información y enviarla a la API Server.
+
+REFERENCIAS: https://guiadev.com/tutorial-kubernetes-en-espanol/ 
+	Para mayor compresión de estos conceptos: https://www.adictosaltrabajo.com/2016/04/25/primeros-pasos-con-kubernetes/
+
+
+************INSTALACIÓN DE KUBERNETES DE FORMA LOCAL*******************
+
+****instalar chocolatey
+
+	Ir a https://chocolatey.org/install#install-with-powershellexe, y copiar la url siguiente:
+
+		Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+	Que debera ejecutar en powershell con permisos de administrador.
+
+****instalar el kubernete CLI
+
+	--Para proceder a instalar kubernetes ejecute el siguiente comando:
+
+	choco install kubernetes-cli
+
+****instalar el minikube
+
+Forma 1:
+
+	choco install minikube
+
+Forma 2: 
+ 	Descargar el archivo minikube de la siguiente pagina:
+
+	https://github.com/kubernetes/minikube/releases
+
+	Dar clic y sobre el link Windows/amd64, y una vez descargado sobre la carpeta de descargas, dar clic derecho en 
+	propiedades del archivo y marcar la opción desbloquear y pulsar aceptar, luego renombrar el archivo como ninikube 
+	y pegarlo en C:\windows\sysWOW64
+Forma 3:
+
+	Ir a la siguiente pagina para descargar el instalador:
+
+		https://github.com/kubernetes/minikube/releases
+
+	Y descargar los archivos minikube-installer.exe y minikube-linux-amd64, y ejecutar el 
+	archivo minikube-installer.exe.
+
+	--Para ver que se instalo de modo correcto minikube ejecute el siguiente comando:
+
+		minikube version
+
+	--Para ver que se instalo de modo correcto kubernetes-CLI ejecute el siguiente comando:
+
+		 kubectl version
+****Para crear el nodo minikube
+
+	minikube start
+	Nota: Este comando creara el nodo minikube en kubernetes y generara una maquina virtual en VirtualBox
+
+*****Para configurar el dashboard y desplegarlo****
+
+Forma 1:
+
+	--Para lanzar y revisar la salud del dashboard con minikube:
+
+		minikube dashboard
+
+		Nota: arrojara una Url como esta, http://127.0.0.1:54197/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/#!/overview?namespace=default,
+		si lanza un error como el siguiente "Temporary Error: unexpected response code: 503", abra el puerto en el firewall que indique en este caso 54197, y luego 
+		sustituya 127.0.0.1 por localhost y coloque la siguiente url en el navegador, siguiendo el ejemplo: 
+		http://localhost:54197/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/#!/overview?namespace=default
+
+Forma 2:
+	--Para configurar el Dashboard UI, ejecute  en unidad C los siguientes comandos:
+
+		kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+
+----------------Esto es opcional(No recomendable hacer puede desconfigurar todo)---------------------------------------------------------------------------------------------------
+		kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
+		kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
+		kubectl create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/grafana.yaml
+---------------------------------------------------------------------------------------------------------------------------------
+
+	--Para desplegarlo, ejecute los siguientes comandos:
+
+		kubectl proxy
+
+	--Abra la siguiente url para ver si esta disponible:
+
+		http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/	
+
+	 REFERENCIAS:
+		https://www.hanselman.com/blog/HowToSetUpKubernetesOnWindows10WithDockerForWindowsAndRunASPNETCore.aspx
+		https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+
+************instalar kubelet******************************
+
+	choco install kubernetes-node
+
+************Comandos para trabajar con kubernettes***********************
+
+	--Para un cluster de Kubernetes, ejecute el siguiente comando:
+
+		minikube delete
+
+	--Si despues de borrar, ya no se puede crear un cluster ni se puede listar los nodos, ejecute 
+
+		kubeadm reset
+
+	--Para obtener la lista de nodos
+
+		kubectl get nodes
+
+	--Para crear un nuevo nuevo
+		kubeadm join --token {token} {IP-nodo-master}:puerto
+
+	--Para borrar un nodo
+
+		kubectl delete node nombreNodo
+		Nota: nombrenodo es el nombre del nodo
+
+	--Para crear un contenedor de nginx
+
+		kubectl run webserver --image=nginx:alpine
+
+	--Para revisar que se realizo la creación del pod          
+
+ 		kubectl get deployments
+
+	--Para revisar lista los pods
+		
+		kubectl get pods
+
+	--Para eliminar un pod
+
+		kubectl delete pod namepod
+                Nota: namepod es el nombre del pod que aparece en la columna NAME de la lista de pods que muestre el comando kubectl get pods,
+		aunque elimine el pod se volvera a crear otro debido a que el contenedor sigue existiendo
+
+	--Para exponer un contenedor(deployment) de nginx como servicio
+
+		kubectl expose deployment webserver --type=LoadBalancer --port=8071
+		Nota: webserver es el nombre del contenedor nginx,  va a ser de tipo Balanceador de carga y estara expuesto por el puerto 80
+
+	   Si se ejecuta el comando kubectl get services para listar los servicios, obtendremos algo como lo siguiente:
+
+		C:\WINDOWS\system32>kubectl get services
+		NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+		kubernetes   ClusterIP      10.96.0.1       <none>        443/TCP          7h46m
+		webserver    LoadBalancer   10.103.82.230   <pending>     8071:31217/TCP   2m
+
+	 Indica  que el servicio del contenedor webserver recien creadoes de tipo LoadBalancer y tiene un puerto de escucha interno 31217, y 
+	 un puerto de escucha externo 8071 que sera util cuando se especifique una IP externa.
+
+      --Para saber la url del servicio recien creado del contenedor nombrado webserver ejecute el siguiente comando:
+	
+		minikube service webserver --url
+		Nota: webserver es el nombre del servicio
+
+	--Para eliminar un servicio, ejecute el siguiente comando:
+
+		kubectl delete service webserver
+		Nota: webserver es el nombre del servicio
+
+	--Para eliminar un deployment, ejecute el siguiente comando
+
+		kubectl delete deployment springboot-deployment
+		Nota: springboot-deployment es el nombre del deployment		
+	--Para listar los token del nodo maestro
+
+		kubeadm token list
+
+	--Para generar un token
+
+		kubeadm token generate
+
+	--Para entrar a un POD (es un contenedor), en el cual puedes entrar como si fuera un equipo
+
+		kubectl exec -it mongo-7795b99f9c-9wp7c -- /bin/bash
+		Nota: mongo-7795b99f9c-9wp7c es el nombre del POD
+
+	--Para ver los pods más el namespace al que pertenecen
+
+		kubectl get pods --all-namespaces
+
+	--Para ver el detalle de un despliegue
+		
+		kubectl describe deployment apache
+		Nota: apache es el nombre del despliegue
+
+	--Para crear un despliegue con un archivo yaml, hecho el archivo y situado en la ruta donde se encuentra el archivo
+
+		kubectl create -f nginx-deployment.yaml
+		Nota: nginx-deployment.yaml es el nombre del archivo
+
+	--Para ver el estatus de un despliegue, ejecute el siguiente comando
+
+		kubectl rollout status deployment/nginx-deployment
+		Nota: nginx-deployment es el nombre del deployment
+
+	--Para actualizar un despliegue ya hecho con un archivo yaml, hecho el archivo y situado en la ruta donde se encuentra el archivo
+		ejecute el siguiente comando:
+
+		kubectl apply -f nginx-deployment.yaml
+		Nota: nginx-deployment es el nombre del archivo
+
+
+
+
+************************REFERENCIAS**************************************************
+https://www.hanselman.com/blog/HowToSetUpKubernetesOnWindows10WithDockerForWindowsAndRunASPNETCore.aspx
+https://www.adictosaltrabajo.com/2016/04/25/primeros-pasos-con-kubernetes/
+https://github.com/kubernetes/minikube/issues/2703
+https://onthedock.github.io/post/170417-como-agregar-un-nodo-a-un-cluster-kubernetes/
+https://enmilocalfunciona.io/introduccion-a-kubernetes-i/
+
+
+https://www.youtube.com/watch?v=-SVrN9-aI3M
+https://www.youtube.com/watch?v=eHvKc6hNmhI
+https://codelabs.developers.google.com/codelabs/cloud-springboot-kubernetes/#8
+
+https://www.adictosaltrabajo.com/2019/01/03/desplegar-una-aplicacion-web-con-minikube/
+
+https://www.brosinski.com/post/deploying-spring-boot-app-kubernetes/
+
+

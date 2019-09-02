@@ -1,0 +1,18 @@
+XSS Protection
+http://www.elladodelmal.com/2014/10/x-xss-protection-http-header-y-los.html
+
+X-Content type
+https://www.apasionadosdelmarketing.es/por-que-deberias-anadir-un-encabezado-http-nosniff-a-tus-webs/
+
+X-Frame Options
+https://www.wpdoctor.es/cabecera-x-frame-options-para-mejorar-la-seguridad-de-tu-web/
+
+
+Si queremos añadir otras cabeceras de seguridad a partir de cambios en el archivo functions.php, podemos hacerlo usando una única función, en lugar de añadir cada cabecera en una función distinta, aunque el funcionamiento sea similar. En el siguiente código de ejemplo, que habría que colocar al final del archivo functions.php, se añaden las cabeceras X-Content-Type-Options, X-Frame-Options y X-XSS-Protection:
+
+add_action( 'send_headers', 'add_header_seguridad' );
+function add_header_seguridad() {
+header( 'X-Content-Type-Options: nosniff' );
+header( 'X-Frame-Options: SAMEORIGIN' );
+header( 'X-XSS-Protection: 1;mode=block' );
+}

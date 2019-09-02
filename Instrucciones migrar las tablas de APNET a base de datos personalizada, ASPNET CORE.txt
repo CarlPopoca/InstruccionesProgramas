@@ -1,0 +1,115 @@
+
+**************PARA DE MIGRACIÓN DE TABLAS PARA EL METODO CODE FIRST EN ASP NET CORE 2.2*******************
+
+**********Agregar esta Clase enla carpeta Model o puede agregarse en la Carpeta Data**********
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+//En caso de que se haya creado clase que deseen importarse con CODE FIRST
+//using NombreProyecto.Models;
+
+//Implementar los metodos de la interfaz
+public class AppDbContext:IdentityDbContext
+{
+
+	public AppDbContext(DbContextOptions<AppDbContext> options)
+		:base (options)
+	{
+		
+	}
+	
+	//Esto es opcional por si se cuenta con una Clase en el Model
+	//public DbSet<TablaPrueba> TablaPrueba { get; set; }
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		base.OnModelCreating(modelBuilder);
+		modelBuilder.Seed();
+	}
+}
+
+********Agregar lo siguiente a la clase Startup.cs********
+
+public void ConfigureServices(IServiceCollection services)
+{
+            //Se agrega para especificar el tipo de Conexión y la variable que contiene la cadena de conexión
+            services.AddDbContextPool<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            //Se agrega para especificar que se quiere añadir las tablas de seguridad de ASP NET
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+	
+	//Si se quiere ademas de lo anterior personalizar el password, modifiquelo de la siguiente forma
+	/*
+            services.AddIdentity<IdentityUser, IdentityRole>(
+                options => {
+                    options.Password.RequiredLength = 10;
+                    options.Password.RequiredUniqueChars = 3;
+                }
+                ).AddEntityFrameworkStores<ApplicationDbContext>();
+
+	*/
+}
+
+
+****Agregar lo siguiente en el appsetings.json
+
+La cadena es para una Base de datos de Sql Server con autenticación de windows:
+
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=201701839-POAC\\SQLEXPRESS;Database=Blog;Trusted_Connection=True;MultipleActiveResultSets=true;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+****Hacer la migración con CODE FIRST*****
+
+Abrir consola Package Manager Console(Herramientas> Administrador de paquetes Nuget>Consola del Administrador de Paquetes)
+	 y ejecutar los siguientes comandos:
+
+	Enable-Migrations
+	Nota: Para Habilitar las Migraciones
+
+	Add-Migration AddingIdentity
+
+Si debe migrar las tablas de Role, ejecute el siguiente comando:
+
+	Add-Migration ApplicationRole
+	Nota: No fue necesario ejecutar este Comando para un aplicativo ASP NET Core, aplicar si es necesario por 
+	      la configuración de seguridad que requiere.
+
+Para confirmar y se suban las tablas de ASPNET, USER y ROLE, ejecute el siguiente comando:
+
+	Update-Database
+
+Si desea volver a aplicar el AddingIdentity debe ejecutar el siguiente comando, y después borrar el archivo de migración
+	de identity que se aloja dentro de la carpeta Migrations:
+
+	Update-Database -TargetMigration $InitialDatabase
+	Nota: el siguiente comando dotnet ef database remove
+	
+***Url para decodificar Urls***
+https://meyerweb.com/eric/tools/dencoder/
+
+
+**************URLS PARA HACER LA MIGRACIÓN DE LAS TABLAS DE ASPNET, LOGIN Y SEGURIDAD EN ASP NET CORE *********
+
+****Url para hacer la migración de una BD con code first, y hacer el primer proyecto:
+https://www.youtube.com/watch?v=egITMrwMOPU
+****Url para hacer el registro de Usuario
+https://www.youtube.com/watch?v=TfarnVqnhX0&list=PL6n9fhu94yhVkdrusLaQsfERmL_Jh4XmU&index=67
+****Url para personalizar los caracteres que pueden introducir en el Password
+https://www.youtube.com/watch?v=kC9qrUcy2Js&list=PL6n9fhu94yhVkdrusLaQsfERmL_Jh4XmU&index=68
+****Url para hacer el logout
+https://www.youtube.com/watch?v=YLAHIZmO2PI&list=PL6n9fhu94yhVkdrusLaQsfERmL_Jh4XmU&index=69
+****Url para hacer el login
+https://www.youtube.com/watch?v=9d8DXXc71RI&list=PL6n9fhu94yhVkdrusLaQsfERmL_Jh4XmU&index=70

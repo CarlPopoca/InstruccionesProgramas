@@ -1,0 +1,104 @@
+***Comandos de Mongodb***
+
+--Para revisar la version de mongo instalada 
+
+mongod --version
+
+--Para crear una Base de datos
+
+use Item;
+
+--Para insertar colecciones, el nombre de cada colección puede ser distinta al de la base datos, la base de datos
+se crea al momento que se inserta el primer registro en la colección
+
+	db.Item.save({name:'holaxx', quantity:'hola1'});
+	db.Item.save({name:'hola2', quantity:'hola2'});
+	Nota: Item es el nombre de la colección
+
+--Para insertar y crear una coleccion de datos en MongoDB solo debemos usar la sentencia insert y agregar 
+el documento (datos) en formato JSON, la colecciones se crean automaticamente en mongodb una vez que insertamos
+ un elemento o coleccion.
+
+	db.[coleccion].insert(   [documento en formato JSON]  ) ;
+	Nota: escribir los datos que se indican pero sin estos simbolos[]
+
+--Para eliminar toda una colección
+
+	db.Item.drop();
+	Nota: Item es el nombre de la colección, se recomienda que el nombre de la colección sea en minuscula
+
+--Para eliminar un registro de una colección
+
+	db.Item.remove({“name” : “holaxx”});
+	Nota: Item es el nombre de la colección, name el campo identificador del registro
+
+--Para actualizar un registro de una colección
+
+	db.Item.update ({name:"holaxx"},{$set:{quantity:"hola1"}});
+	Nota: Item es el nombre de la colección, quantity el nombre del campo
+
+--Crear usuario administrador
+
+use admin
+ 
+db.createUser(
+  {
+    user: "myServerAdmin",
+    pwd: "mipassword",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+);
+ 
+---Restringir el acceso No Autenticado
+
+ya que se dispone de un usuario con los privilegios suficientes, cambiaremos la configuración para restringir 
+el acceso mediante autenticación.
+Editamos el archivo mongod.conf, quitando el comentario de la línea donde se encuentra auth = true
+
+
+Ruta en linux mcedit /etc/mongod.conf
+
+Una vez guardado el cambio, reiniciamos el servicio de MongoDB para que los mismos hagan efecto.
+
+service mongod restart
+
+A partir de este momento se puede acceder a la consola MongoShell autenticándonos como el usuario administrador 
+que se creo. Para ellos utilizamos el usuario y contraseña que elegimos en lugar de “myServerAdmin” y “mipassword”.
+
+mongo --port 20017 -u myServerAdmin -p mipassword --authenticationDatabase admin
+
+--Para comenzar a ejecutar comando en linux, ejecute en la consola 
+
+	mongo
+
+--Para consultar las base de datos ejecute
+	
+	show dbs;
+	
+--Para listar las colecciones
+
+	show collections;
+
+--Para listar los registros de una colección:
+
+	db.Item.find();
+	Nota: Item es el nombre de la colección.
+
+--Para listar los registros de una colección pero que los datos se vean mejor ordenados:
+
+	db.Item.find().pretty();
+	Nota: 	Item es el nombre de la colección
+
+--Para salir de la consola de la mongo 
+
+	quit()
+
+***URL de referencia***
+
+https://donwebayuda.com/tutorial-mongodb-creacion-de-base-de-datos-conexion-remota-y-securizacion/
+
+
+
+***Url de interfaz grafica para trabajar con MongoDB***
+
+http://mms.litixsoft.de/index.php?lang=en

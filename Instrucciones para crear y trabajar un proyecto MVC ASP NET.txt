@@ -1,0 +1,198 @@
+
+Razor: Permite que interactue la vista y el controller con codigo C#, el simbolo identificador es @.
+
+****Ejemplos de uso de Razor:***
+
+Para importar en el html una clase, asi como se hace en un clase se hace aqui, solo se antecede el simbolo:
+
+	@Using Blog.Controller;
+	
+Para hacer uso del modelo de la vista:
+	@model List<Usuario>;
+	Nota: Permite tipear el objeto modelo ya que Dynamic por default, y de esa forma se puedan ocupar atributos de la clase.
+
+Para Setear una variable, ejemplo:
+
+	@{
+		ViewBag.Title = "About";
+	}
+	Nota: ViewBag, es un diccionario de Variables dinamico, donde no es necesario que la variable exista, se puede setear, declarar en la clase 
+	y en en hmtl con Razor se puede hacer lo mismo.
+
+***Ejemplo de trabajo con etiquetas html***
+
+<table class= "table table-striped">
+	<thead>
+		<tr>
+			<td>Email</td>
+			<td>Nombre</td>
+		</tr>
+	</thead>
+	<tbody>
+	{@
+		foreach(var item in Model)
+	         {
+
+			<tr>
+				<td> @item.Email</td>				
+			        <td> @item.Nombre</td>
+			</tr>
+		}
+	}
+	</tbody>
+</table>
+
+***Para agregar entidad de tablas de una BD de Sql Server***
+
+Ya creadas las tablas en SQL server, en Visual Studio de clic en la carpeta Models y de clic en:
+ 1.- Agregar>Nuevo Elemento>Datos>ADO.NET Entity Data Model
+ 2.- Especifique un Nombre (va a ser el nombre de todo el modelo de tablas en .net), en este ejemplo le pondre como nombre "Blog"
+ 3.- Seleccione EF Dessigner desde la base de datos
+ 4.- De clic en nueva Conexión y elija el Origen de datos, en este caso seleccione Microsoft SQL Server
+ 5.- Seleccione un servidor de BD, si no se sabe el nombre en el Management verifiquelo, ejemplo "201701839-POAC\SQLEXPRESS"
+ 6.- Introduzca credenciales si es el caso, de lo contrario la autenticación de windows
+ 7.- Seleccione la BD y de clic en aceptar
+ 8.- Copie la cadena de conexión que se genero, y deje el check marcado de guardar la configuración de Conexión en Web.Config y cambie el Nombre 
+      a "ContextDatabase" porque con él se le genera el nombre a la clase que hara la función de conectarse a la BD y acceder a todas las tablas utilizando
+      Entity Framework
+9.- De clic en siguiente y seleccione todas las tablas, funciones y procedimientos (estas dos ultimas si es el caso)
+10.- En espacio de nombres escriba "Models" y de clic en Finalizar
+
+	--metadata=res://*/Models.Blog.csdl|res://*/Models.Blog.ssdl|res://*/Models.Blog.msl;provider=System.Data.SqlClient;provider connection string="data source=201701839-POAC\SQLEXPRESS;initial catalog=Blog;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
+
+***Para agregar un crud de un tabla***
+Hacer lo siguiente:
+ 1.- Dar clic derecho sobre la carpeta controller, dar clic en Agregar>Controlador>Controlador MVC 5 con vistas que usa Entity Framework 
+	y dar clic en agregar
+ 2.- Seleccione la clase modelo (Se refiere a la clase que se genero de la tabla)
+ 3.- Seleccione el contexto de datos "ContextDatabase" (que es el nombre de a variable con la que podemos acceder a todas las tablas generadas 
+	por Entity framework)
+ 4.- Por el momento desmarque la opción hacer referencia a la biblioteca de scripts(esto es opcional)
+ 5.- Por ultimo de clic en agregar
+
+
+***Para implementar un login***
+
+1.- En el webconfig, dentro de la sección   <system.web></system.web>, incluya:
+	<authentication mode="Forms">
+	      <forms loginUrl="~/Home/Index" timeout="2880"/>
+	</authentication>
+        Nota: Mode = "Forms" porque la autenticación va a ser por formulario, loginUrl="~/Home/Index" se le pondra la 
+	ruta del login, osea Controller y Action que se encarga de desplegarlo
+
+2.- En el controller y el metodo Index del Home, se programara los siguiente:
+
+		public ActionResult Index(string mensaje="")
+		{
+			ViewBag.Message = mensaje;
+			return View();
+		}
+ 	Debido a que solo se encargara de Visualizar mensaje en la vista si lo hay, en él se visualizaran las textos de las validaciones
+	que se implementaran a la hora de introducir o no las credenciales
+
+3.- En la vista del Index crear un formulario que tenga los controles para poder capturar las credenciales y enviarlas por
+	post por medio de un botón al metodo que sera encargado de validar y permitir o no el acceso.
+
+<div class="container">
+	@{
+		if (!string.IsNullOrEmpty(ViewBag.Message))
+		{
+			<div class="alert alert-warning">@ViewBag.Message</div>
+		}
+	}
+	<form action="/Home/Login" method="post">
+		<div class="form-group">
+			<label>Ingresa tu email</label>
+			<input type="text" name="email" value=""/>
+		</div>
+		<div class="form-group">
+			<label>Ingresa tu password</label>
+			<input type="password" name="password" value=""/>
+		</div>
+		<div class="form-group">
+			<button>Iniciar sesion</button>
+		</div>
+	</form>
+</div>
+
+	El codigo Razor que esta al principio recibe el valor de la variable que mostrara los textos de las validaciones
+	El action="/Home/Login" contiene la ruta del Action(metodo) que se encargara de validar los accesos.
+
+4.- En el controller del Home se agregara el siguiente codigo para la Action Login:
+		[HttpPost]
+		public ActionResult Login(string email, string password)
+		{
+			if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+			{
+				ContextDatabase db = new ContextDatabase();
+				var usuario = db.Usuario.FirstOrDefault(e => e.Email == email && e.Password == password);
+
+				if (usuario != null)
+				{
+					FormsAuthentication.SetAuthCookie(usuario.Email,true);
+					return RedirectToAction("Index", "Profiler");
+				}
+				else
+				{
+					return RedirectToAction("Index", new { message="Usuario o contraseña incorrecta" });
+				}
+			} else
+			{
+				return RedirectToAction("Index", new { message = "Capture el usuario y contraseña" });
+			}
+		}
+	Por medio de los parametros recibira lo que envia de los input por post, dentro se validan los datos.
+	Con la siguiente instrucción se valida si el usuario y credenciales existen en la tabla:
+	
+				ContextDatabase db = new ContextDatabase();
+				var usuario = db.Usuario.FirstOrDefault(e => e.Email == email && e.Password == password);
+
+	En caso de que el usuario exista, se creara una coolie persistente y se redireccionara a la vista de acceso:
+	
+ 				FormsAuthentication.SetAuthCookie(usuario.Email,true);
+				return RedirectToAction("Index", "Profiler");
+
+5.- Se crea el metodo para cerrar las sesión en Controller del Home:
+
+		[Authorize]
+		public ActionResult Logout()
+		{
+			FormsAuthentication.SignOut();
+			return RedirectToAction("Index");
+		}
+	Se declara [Authorize] al principio para obligar que no pueda cerrarse si no hay un usuario logeado.
+
+6.-Como el botón, o apartado de sesión debe aparecer en todas las vistas se debe ir a la vista _Layout y colocar el siguiente codigo:
+
+	 @if (User.Identity.IsAuthenticated) {
+		<li>@Html.ActionLink("Cerrar", "Logout", "Home")</li>
+	 }
+
+	User.Identity.IsAuthenticated, es una propiedad generica que guarda el estado si hay un usuario autenticado, con ella se valida para
+	que se habilite el cerrar la sesión.
+
+7.- Se debe crear el controller Profile como un controller vacio y arriba del Index colocarle [Authorize] para que solo accedan 
+	usuarios autenticados:
+
+    [Authorize]
+    public class ProfilerController : Controller
+    {
+        // GET: Profiler
+        public ActionResult Index()
+        {
+            return View();
+        }
+    }
+    Nota: Crearle una vista para que no marque error.
+
+8.-Ir al Controller del Home y crear el metodo Logout y colocarle la etiqueta [Authorize]:
+
+	[Authorize]
+	public ActionResult Logout()
+	{
+		FormsAuthentication.SignOut();
+		return RedirectToAction("Index");
+	}
+	
+	FormsAuthentication.SignOut() destruira la cookie, RedirectToAction("Index") sin especificar ningun mensaje nos mandara a la vista del Home
+	que contiene los controles para apoder acceder.

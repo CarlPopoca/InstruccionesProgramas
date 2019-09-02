@@ -1,0 +1,17 @@
+*******Para montar mongodb en kubernetes********
+kubectl get nodes
+
+kubectl get pods -n=kube-system -l name=portworx
+
+kubectl create -f px-mongo-sc.yaml
+kubectl get sc
+
+kubectl vreate -f px-mongo-pvc.yaml
+kubectl get pvc
+
+kubectl create -f px-mongo-app.yaml
+kubectl get pods
+
+
+kubectl exec -it $PX-POD -n kube-system -- /opt/pws/bin/pxctl volume inspect ${0}
+

@@ -1,0 +1,10 @@
+
+Para configurar la cuenta de GITHUB en BITBUCKET
+	
+	git config --global user.name "Carlos Popoca"
+	git config --global user.email popocas21@hotmail.com
+
+Para ligar los repositorios de GITHUB a BITBUCKET
+	git remote add origin https://CarlPopoca@bitbucket.org/CarlPopoca/bitpopoca.git
+	git remote add origin https://CarlPopoca@bitbucket.org/CarlPopoca/awsProjectsls.git
+	

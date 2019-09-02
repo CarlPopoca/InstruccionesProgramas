@@ -1,0 +1,21 @@
+Instrucciones instalación de Atom
+
+Descargar Atom de la pagina inicial, una vez descargado con doble click se instalara en automatico.
+
+Luego Ir a al menu File y dar clic en Setting para realizar las siguientes acciones:
+
+	
+	Habilitar Show Indent Guide
+	Habilitar Show Scroll Past End
+	Habilitar Show Invisibles
+	Habilitar Shoft Wrap
+
+Luego ir a la sección de update si hay algo que actualizar
+Despues ir a install e instale lo siguiente:
+
+	file icons
+	minimap
+	color picker
+
+	Nota: el primero para que aparezcan iconos distintos para archivos, el segun para tener vista minimizada de todo,
+	el tercero para que aparezca la barra de colores para los estilos

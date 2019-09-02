@@ -1,0 +1,69 @@
+*******Sonarqube server, instalar y validación de una aplicación java**********
+
+--Para instalar Sonarqube en windows descargue el zip de la siguiente url:
+
+	https://www.sonarqube.org/downloads/
+	Nota: De clic sobre la versión Community Edition 7.7
+
+--Para instalar SonarQubeScanner en windows descargue el zip de la siguiente url:
+
+	https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+	Nota: De clic sobre el link windows 64 bit
+
+--Descomprimir los zip, e ir a la ruta bin de sonarscanner, copiar la ruta y agregarla en la 
+	variable path de variables de entorno:
+
+	C:\SonarQube\sonar-scanner-cli-3.3.0.1492\bin
+	Nota: Este es un ejemplo de la ruta que se copia y pega en Path de variables de entorno
+
+--Para checar una aplicación con sonar debe editar el siguiente archivo:
+
+	C:\SonarQube\sonar-scanner-cli-3.3.0.1492\conf\sonar-scanner.properties
+
+  Y colocarle las siguientes lineas:
+
+
+	sonar.scm.disabled=true
+	
+sonar.projectKey=bootdocker
+	
+sonar.projectName=bootdocker
+	
+sonar.projectVersion=1.0
+	
+sonar.sources=C:/Proyectos/Spring/bootdocker/src/main/java/com/dataart/bootdocker/
+	
+sonar.language=java
+
+	sonar.java.binaries=C:/Proyectos/Spring/bootdocker/target
+
+	Nota:bootdocker es el nombre del proyecto, projectVersion la versión que se le quiera poner, y sources
+	es la ruta del proyecto y se debe reemplazar el caracter \ por /, language el lenguaje del proyecto, 
+	java.binaries es la ruta del target del proyecto donde se generaran, guardan los archivos generados con la
+	compilación
+
+--En el cmd ejecutar el archivo starSonar:
+
+	C:\SonarQube\sonarqube-7.7\bin\windows-x86-64\StartSonar.bat
+	Nota: La ruta puede cambiar, pero el nombre del archivo es el mismo.
+	
+	El proceso terminara hasta que le aparezcan mensajes como los siguientes:
+		
+		jvm 1    | 2019.04.03 14:55:04 INFO  app[][o.s.a.SchedulerImpl] Process[ce] is up
+		jvm 1    | 2019.04.03 14:55:04 INFO  app[][o.s.a.SchedulerImpl] SonarQube is up
+
+
+--Para ejecutar la consola de SonarQube ejecute la siguiente url:
+
+	http://localhost:9000
+
+--Para que sonar escanee el proyecto y nos indique en la consola los resultados, debe ejecutar en el cmd el 
+	siguiente comando situandose dentro de la carpeta del proyecto:
+
+	C:\Proyectos\Spring\bootdocker\sonar-scanner.bat
+	Nota: la ruta del proyecto puede variar, pero el comando es el mismo
+		
+	
+
+
+	

@@ -1,0 +1,29 @@
+******Videos para hacer integración continua de un proyecto ASP con SonarQube en Azure
+
+1. Primer video
+
+https://www.youtube.com/watch?v=AJRWJmQV2k0
+
+2.Segundo video
+
+https://www.youtube.com/watch?v=M-kGkt9neCM 
+
+
+***Despliegue continuo Azure
+
+https://www.youtube.com/watch?v=grOzz2BQXmw
+
+***Para realizar despliegues con palantillas ARM(modo para hacer despliegues incluso de todo un ambiente mediante scripts)
+
+https://www.bravent.net/como-usar-plantillas-arm-para-crear-el-despliegue-en-azure
+
+***Para realizar integración continua y despliegue continuo de proyecto Angular en Azure con repositorio en S3 de Amazon
+
+https://www.youtube.com/watch?v=6NizWFPPFF0
+
+
+***Otros cursos a tomar***
+
+https://www.youtube.com/watch?v=O37b2UTUE7w&list=PLkPGUkvIjaT9GR0RPi-jvyZu_sTVDyQhi
+
+https://www.youtube.com/watch?v=0mKB9UYc5g4
