@@ -6,7 +6,8 @@ Primero se debe configurar el usuario y el correo, abra el cmd y ejecute los sig
 
 	Nota: se especifica el nombre del usuario y el correo
 
-Para crear un repositorio nuevo siga los siguientes pasos.
+Para crear un repositorio nuevo siga los siguientes pasos:
+
 	1.-Entre con su cuenta a GITHUB
 	2.-De clic el botón "+" de arriba a la derecha y seleccione la opción New Repository
 	3.- Escriba un nombre, elija si es público o privado y opcionalmente una descripción.
@@ -16,6 +17,7 @@ Luego para subir la carpeta del codigo del proyecto ir a la carpeta donde se enc
 siguiente comando.
 
 	git init
+	Nota: Este comando se ejecuta para establecer que la carpeta se ligara a un repositorio GIT, solo es necesario ejecutarlo una sola vez
 
 Luego, desde la carpeta  haces el comando "add" para agregar todos los archivos al "staging area".
 
@@ -30,6 +32,7 @@ Despues se ejecuta e siguiente comando para hacer el commit
 Luego especifique a que repositorio de github se añadira todos los archivos
 
 	git remote add origin https://github.com/CarlPopoca/ejemplo.git
+	Nota: Este comando se ejecuta cuando se quiere enlazar una carpeta con un repositorio especifico, solo es necesario ejecutarlo una vez
 
 Y por ultimo ejecute el siguiente comando para que se comience la carga de archivos
 
@@ -37,6 +40,8 @@ Y por ultimo ejecute el siguiente comando para que se comience la carga de archi
 
 	Nota:pedira el usuario y contraseña.
 
+Los pasos mencionados anteriormente desde el comando GIT INIT hasta el PUSH, se ejecutaran uno por uno cuando se desee subir el contenido 
+	a un repositorio por primera vez.
 
 Para listar la configuración ejecute el siguiente comando
 

@@ -1,3 +1,4 @@
+
 ******Para generar el script de creación de la BD realice lo siguiente:******
 
 	1.-De clic derecho sobre la BD y de clic en Script Database as
