@@ -1,0 +1,75 @@
+******Para instalar Angular realice los siguientes pasos:******
+
+Instalar NodeJS en su ultima versión, para eso entraremos a su web oficial y descargaremos el instalador más actualizado https://nodejs.org/es/
+
+Actualizar NPM, el gestor de paquetes de node, para bajarnos las dependencias más actuales:
+
+	npm install -g npm@latest
+
+Borrar la cache de NPM:
+
+	npm cache clean --force
+
+Desactivar las auditorias de NPM para evitar fallos:
+
+	npm set audit false
+
+Desinstalar los paquetes anteriores de Angular CLI
+
+	npm uninstall -g angular-cli
+
+	npm uninstall -g @angular/cli
+
+Borrar la cache de NPM de nuevo:
+	
+	npm cache clean --force
+
+Instalar la última versión de Angular CLI para instalar Angular 7:
+
+	npm install -g @angular/cli@latest
+
+Ahora ya tenemos instalado y actualizado Angular CLI y ya podemos generar un nuevo proyecto de Angular 7
+
+	ng new
+
+*********************DEFINICIONES**************************************
+
+Angular es un framework que corre por encima de javascript y es mantenido por GOOGLE, actualmente se basa en componentes y el codigo que se genera
+es similar a la programación orientada a objetos.
+
+Una aplicación angular se compone principalmente por componentes, modulos, servicios y html.
+
+Modulos: Son encapsuladores de componentes
+Componentes: Son contenedores de funcionalidad que tendra una pagina, se define la etiqueta o selector que identificara al componente en el html, y se establece con cual html se enlaza.
+Html: Son los archivos donde se presentara y/o actualizara la información
+Servicios: Son proveedores y encapsuladores de funcionalidad generica, nos ayudan a reutilizar código.
+
+Una pagina web puede contener todos o algunos de los archivos mencionados.
+
+*******************ESTRUCTURA DE UN PROYECTO DE ANGULAR*****************
+
+src: Es la carpeta principal contenedora de todo el codigo
+app: Carpeta que contiene el componente, modulo y html principal app, y tambien contiene una carpeta con los mismos archivos por cada pagina. Tambien puede contener
+	una carpeta para los servicios e interfaces.
+index.hml: Pagina principal del proyecto
+karma.conf.js: Contiene configuración del proyecto, como el browser por defecto para desplegar la información
+styles.cc: Archivo para agregar estilos personalizados 
+tsconfig.app.json: Archivo de configuración que extienden del archivo tsconfig.json
+tsconfig.server.json: Archivo de configuración que extienden del archivo tsconfig.json
+tsconfig.spec.json: Archivo de configuración que extienden del archivo tsconfig.json
+angular.json: Contiene la configuración del proyecto de Angular como el index html principal, carpeta principal del proyecto, ruta de los styles que cargara,
+	proyecto default, etc.
+package.json: Contiene las librerias de Angular, bootstrap , jquery, rxjs y otras con sus respectivas versiones y que se pueden ocupar
+tsconfig.json: Contiene la configuración principal del proyecto, como la variable experimentalDecorators seteada a true y que permite inyectar clases que derivan de librerias.
+
+
+*****Proyecto ASP NET Core con plantilla Angular y que consume una WEB API*****
+
+Crear un proyecto ASP NET Core 2.2 con Angular
+
+Se generaran los archivos que controloran la vista por cada pantalla en la ruta src>app, con el siguiente comando en PowerShell:
+
+	ng generate component producto-detalle --skip-import
+	Nota:producto-detalle es el nombre de la carpeta
+
+

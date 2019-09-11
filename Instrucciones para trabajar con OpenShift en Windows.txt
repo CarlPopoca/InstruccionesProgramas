@@ -149,8 +149,6 @@ Para un email, una actualización de hora, para este ejemplo actualizaremos la ho
 	
 	git commit -am "add trabajo cron"
 
-
-
 	Y despues ejecute para publicarlo
 	
 	git push
