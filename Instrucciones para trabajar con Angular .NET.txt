@@ -61,15 +61,3 @@ angular.json: Contiene la configuración del proyecto de Angular como el index ht
 	proyecto default, etc.
 package.json: Contiene las librerias de Angular, bootstrap , jquery, rxjs y otras con sus respectivas versiones y que se pueden ocupar
 tsconfig.json: Contiene la configuración principal del proyecto, como la variable experimentalDecorators seteada a true y que permite inyectar clases que derivan de librerias.
-
-
-*****Proyecto ASP NET Core con plantilla Angular y que consume una WEB API*****
-
-Crear un proyecto ASP NET Core 2.2 con Angular
-
-Se generaran los archivos que controloran la vista por cada pantalla en la ruta src>app, con el siguiente comando en PowerShell:
-
-	ng generate component producto-detalle --skip-import
-	Nota:producto-detalle es el nombre de la carpeta
-
-
