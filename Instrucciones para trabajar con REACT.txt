@@ -1,0 +1,80 @@
+************DEFINICIONES*********
+REACT es un framework que corre por encima de javascript creado por facebook para crear aplicaciones con mejor rendimiento,
+se ocupa para diseñar el front  creando componentes reutilizables y que son consumidos como etiquetas en html, se trabaja bajo el 
+concepto de single page(todo el contenido de una aplicación en una sola página).
+
+Al construir la vista del lado del Cliente y tener componentes para obtener los datos al servidor se evita cargar toda la pagina cada vez
+que se necesita obtener o realizar una transacción a la Base de datos(como lo haría uan aplicación tradicional que trabaja del lado del servidor), 
+da la apariencía como si se trabajara en una aplicación de escritorio
+
+REACT al tener su propio Virtual DOM se consigue que cuando se hacen cambios en el aplicativo se refresquen automaticamente en el navegador, en otras
+palabras la aplicación se hace reactiva. 
+
+Los siguientes son algunos componentes para hacer una aplicación fullstack en javascript:
+
+	React Navive: Permite crear interfaces moviles de usuario, aplicaciones de escritorio nativas de windows e inluso para desarrollar aplicaciones
+		para internet de las cosas.
+	Next.js: Para renderizar codigo html desde el servidor (server side render)
+	GraphQL.Js: Ayuda a obtener datos de servidores remotos y utilizarlos en la interfaz,también se
+		puede utilizar para pedir datos a un servidor cada cierto tiempo
+		después de realizada una iteracción en la , se esta volviendo muy popular para ser el reemplazo de 
+		las REST API.
+	Redux: Ayuda a administrar el estado de los datos de nuestra aplicación, cuando eliminamos, agregamos o listamos
+	 los datos, todas estas formas de interacción con los datos podemos administrarlos con Redux.
+	Flux: Es una arquitectura para el manejo y flujo de datos en una aplicación web, particularmente en el front-end, 
+		fue creada por facebook y viene a sustituir el patrón MVC
+	Apolo: Es un framework para utilizar GraphQL en cualquier servidor back-end
+	Firebase: que proporciona una Base de datos en la cual no se necesita tener un back-end construido para acceder
+		 a los datos.
+
+Pagina oficial de REACT:
+
+	https://reactjs.org/
+
+************Instalación de sofware para trabajar con REACT*********
+
+Instalar NodeJS en su ultima versión, para eso entraremos a su web oficial y descargaremos el instalador más actualizado https://nodejs.org/es/
+
+Actualizar NPM, el gestor de paquetes de node, para bajarnos las dependencias más actuales:
+
+	npm install -g npm@latest
+
+Borrar la cache de NPM:
+
+	npm cache clean --force
+
+Desactivar las auditorias de NPM para evitar fallos:
+
+	npm set audit false
+
+Instalar el comando para crear aplicaciones REACT:
+
+	npm install -g create-react-app
+
+
+************Instrucciones para crear una aplicación en REACT*******
+
+Para crear una aplicación desde cero abra un cmd, posicionese en la carpeta que contendra todo el codigo y ejecute los siguientes comandos:
+
+	create-react-app my-app
+	cd my-app
+	npm start
+
+	Nota: El nombre de la aplicación debe ser en minusculas, es una restricción de npm, para ver otras formas de crear o añadir aplicaciones REACT
+	 vaya a la url https://reactjs.org/ y de clic en el menu Docs
+
+************Estructura de un proyecto de REACT**************
+
+node_modules: Carpeta relacionada al entorno de node y contiene los codigos que se necesitan para trabajar con REACT.
+package.json: Describe datos del proyecto como el nombre, versión, si es el paquete es privado, las dependencias react que ocupa y comandos
+	que puedes ocupar.
+public: Almacenaremos archivos que esten relacionados al html.
+	favicon.ico: Es el icono que se ve en la pantalla del navegador
+	manifest.json: Contiene los datos principales del proyecto como el index.html (la página principal), los datos del icono,  título del proyecto etc..
+src: contiene los js que tendran código REACT y los css.
+	index.js: Index js principal que importa las librerías de REACT y REACTDOM, los estilos y otros js que serán cargados cuando se despliegue la aplicación en el navegador.
+package.lock.json:Es un archivo que contiene código que se genera de manera automatica cada que se realiza una instalación.
+.gitignore: Es un archivo de configuración de git para el sistema de control de versiones.
+
+
+
