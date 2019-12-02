@@ -1,0 +1,36 @@
+****Crear un organización Team For Open Source*******
+
+-- Dar clic en el icono de más (+) y después de clic en New organization
+
+--Elija Choose Team For Open Source y realice las siguientes acciones:
+	
+	* Escriba un nombre para su organización
+	* Un email de contacto
+	* Elija la opción My personal account
+
+-- Pulse en el botón de  Next
+
+***Actualizar el perfil de la organización 
+
+-- Dar clic sobre la foto, después en settings y luego en organizations, vaya a la sección de perfil de la oraganización y 
+capture la información.
+
+****Invitar miembros*****
+
+-- Dar clic en People, despúes de clic en invite member y busque las personas que desea invitar
+
+****Para asignar usuarios como Administrador****
+
+-- Dar clic sobre la foto, después en settings y luego en organizations, por consiguiente realice los siguientes pasos:
+
+	* De clic en Settings y de clic GitHub Apps
+	* Escriba el nombre de la persona que desea designar
+
+	
+
+
+
+
+
+
+

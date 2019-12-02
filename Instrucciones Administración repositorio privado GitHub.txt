@@ -1,0 +1,11 @@
+--Añadir colaboradores realice los siguientes pasos:
+
+	* De clic en su repositorio privado, luego en Settings y después en Collaboratos
+	* En el cuadro de texto agregue los colaboradores (solo se puede tener hasta 3 colaboradores)
+
+--Añadir correo para las notificaciones
+
+	* De click en Notifications y añada el correo
+
+
+	
