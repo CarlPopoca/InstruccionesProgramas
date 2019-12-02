@@ -94,6 +94,31 @@ Verificar que se cambio de branch, ejecue:
 Permitir dar commit a archivos con nombres muy largos:
 
 	git config --system core.longpaths true
+
+Eliminar un carpeta, situese en la ruta donde se encuentra y ejecute los siguientes comandos:
+
+	git rm -r micarpeta
+	git commit -m "Se elimino la carpeta"
+	git push -u origin master
+
+Eliminar un archivo, situese dentro de la carpeta y ejecute los siguientes comandos:
+
+	git rm nombrearchivo.extension
+	git commit -m "Se elimino la carpeta"
+	git push -u origin master
+
+Renombrar una carpeta, situese en la ruta donde se encuentra la carpeta y ejecute los siguientes comandos:
+
+	git mv nombreactual nombrenuevo
+	git commit -m "Se actualizo el nombre de la carpeta"
+	git push -u origin master
+
+Añadir un solo archivo, situese en la ruta donde se encuentra y ejecute los siguientes pasos:
+
+	git add nombrearchivo
+	git commit -m "Se sube archivo"
+	git push -u origin master
+	
 -----------------------------------------------------------------------
 Para hacer un merge forzado en caso que arroje el siguiente error:
 
