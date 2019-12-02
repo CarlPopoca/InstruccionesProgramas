@@ -49,7 +49,6 @@ Para listar la configuración ejecute el siguiente comando
 
 	git config --list
 
-
 Para generar clave publica para conectarse por ssh al repositorio GIT, ejecute el programa puttygen.exe,
 Luego seleccione la opción SSH de parameters y de clic en el boton Generate
 
@@ -57,9 +56,7 @@ Para registrar la clave privada ppk en windows, abra la conexion putty, seleccio
 de SSH >auth coloque la ruta del archivo ppk y de clic en el boton open, para mas detalle revise el siguiente link 
 para ver como se hace esto en windows.
 
-
 http://eltallerdelbit.com/ssh-clave-publica-privada
-
 
 Para clonar un repositorio (descargar) ejecute el siguiente comando
 
@@ -78,17 +75,25 @@ por http debe ejecutar el siguiente comando para especificar la ruta por ssh.
 	--Si es por windows busque el archivo .git/config dentro de la carpeta del codigo de su proyecto y abralo para cambiar la url
 
 	.git/config
-Para cancelar cambios hechos aun repositorio descargado, en el cmd situese en la carpeta del proyecto descargado y ejecute el siguiente comando:
+Cancelar cambios hechos aun repositorio descargado, en el cmd situese en la carpeta del proyecto descargado y ejecute el siguiente comando:
 
 	git stash
-Para cambiar a otro branch, en el cmd ejecute el siguiente comando:
+
+Bajar cambios y hacer marge al mismo tiempo:
+
+ 	git pull origin master --allow-unrelated-histories
+
+Cambiar a otro branch, en el cmd ejecute el siguiente comando:
 
 	git checkout nombrerepositorio
 
-Para verificar que se cambio de branch, ejecue:
+Verificar que se cambio de branch, ejecue:
 
 	git branch
 
+Permitir dar commit a archivos con nombres muy largos:
+
+	git config --system core.longpaths true
 -----------------------------------------------------------------------
 Para hacer un merge forzado en caso que arroje el siguiente error:
 
