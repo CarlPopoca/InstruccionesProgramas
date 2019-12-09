@@ -79,6 +79,10 @@ Cancelar cambios hechos aun repositorio descargado, en el cmd situese en la carp
 
 	git stash
 
+Cancelar cambios hechos a un archivo y regresar a la versión anterior:
+
+	git checkout -- nombrearchivo.extension
+
 Bajar cambios y hacer marge al mismo tiempo:
 
  	git pull origin master --allow-unrelated-histories
@@ -118,6 +122,10 @@ Añadir un solo archivo, situese en la ruta donde se encuentra y ejecute los sigu
 	git add nombrearchivo
 	git commit -m "Se sube archivo"
 	git push -u origin master
+
+Deshacer el último commit porque ya no desea confirmar la subida de los cambios, situese en la carpeta y ejecute:
+
+	git reset --hard HEAD~1
 	
 -----------------------------------------------------------------------
 Para hacer un merge forzado en caso que arroje el siguiente error:
