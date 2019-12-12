@@ -1,48 +1,79 @@
-*******Sonarqube server, instalar y validación de una aplicación java**********
 
---Para instalar Sonarqube en windows descargue el zip de la siguiente url:
+Instalar Sonarqube en windows descargue el zip de la siguiente url:
 
 	https://www.sonarqube.org/downloads/
 	Nota: De clic sobre la versión Community Edition 7.7
 
---Para instalar SonarQubeScanner en windows descargue el zip de la siguiente url:
+Instalar SonarQubeScanner en windows descargue el zip de la siguiente url:
 
 	https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
 	Nota: De clic sobre el link windows 64 bit
 
---Descomprimir los zip, e ir a la ruta bin de sonarscanner, copiar la ruta y agregarla en la 
+Descomprimir los zip, e ir a la ruta bin de sonarscanner, copiar la ruta y agregarla en la 
 	variable path de variables de entorno:
 
 	C:\SonarQube\sonar-scanner-cli-3.3.0.1492\bin
 	Nota: Este es un ejemplo de la ruta que se copia y pega en Path de variables de entorno
 
---Para checar una aplicación con sonar debe editar el siguiente archivo:
-
-	C:\SonarQube\sonar-scanner-cli-3.3.0.1492\conf\sonar-scanner.properties
-
-  Y colocarle las siguientes lineas:
-
+Escanear una aplicación java agregue lo siguiente al archivo sonar-scanner.properties:
 
 	sonar.scm.disabled=true
-	
-sonar.projectKey=bootdocker
-	
-sonar.projectName=bootdocker
-	
-sonar.projectVersion=1.0
-	
-sonar.sources=C:/Proyectos/Spring/bootdocker/src/main/java/com/dataart/bootdocker/
-	
-sonar.language=java
-
+	sonar.projectKey=bootdocker
+	sonar.projectName=bootdocker
+	sonar.projectVersion=1.0
+	sonar.sources=C:/Proyectos/Spring/bootdocker/src/main/java/com/dataart/bootdocker/
+	sonar.language=java
 	sonar.java.binaries=C:/Proyectos/Spring/bootdocker/target
 
-	Nota:bootdocker es el nombre del proyecto, projectVersion la versión que se le quiera poner, y sources
+	Nota:La ruta del archivo sonar-scanner.properties es parecida a esta C:\SonarQube\sonar-scanner-cli-3.3.0.1492\conf\,
+	 bootdocker es el nombre del proyecto, projectVersion la versión que se le quiera poner, y sources
 	es la ruta del proyecto y se debe reemplazar el caracter \ por /, language el lenguaje del proyecto, 
 	java.binaries es la ruta del target del proyecto donde se generaran, guardan los archivos generados con la
 	compilación
 
---En el cmd ejecutar el archivo starSonar:
+Escanear una aplicación net realice los siguientes pasos:
+
+	* Agrege en lo siguiente en el archivo sonar-scanner.properties:
+
+		sonar.scm.disabled=true
+		sonar.projectKey=appSolid
+		sonar.projectName=appSolid
+		sonar.projectVersion=1.0
+		sonar.sources=C:/PROYECTOS/VisualStudioNET/APPSolidPatronesDiseño/
+		sonar.language=cs
+		sonar.visualstudio.solution=C:/PROYECTOS/VisualStudioNET/APPSolidPatronesDiseño/FrmSolidPatronesDiseño.sln
+		sonar.visualstudio.enable=true
+		sonar.sourceEncoding=UTF-8
+
+	* Descargue el Sonar MSBuild de la siguiente pagina:
+	
+		https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/
+
+	* Descomprima el zip de Sonar MSBuild, luego copie y pegue de preferencia en la ruta C:\SonarQube.
+	* Vaya a variables de entorno y agregue en la variable Path la ruta del Sonar MSBuild, ejemplo: C:\SonarQube\sonarqube-MSBuild.
+	* Abra su proyecto y ejecute el siguiente comando en la consola del administrador de paquetes:
+	
+		Install-Package Microsoft.CodeAnalysis -Version 3.4.0
+		Nota: Si se lanza un error en esta dll al realizar el escaneo, ejecute este comando con la versión que se le indique en el mensaje de error.
+
+	* Abra un cmd con permisos de administrador, luego vaya a la raiz de su proyecto y ejecute los siguientes comandos:
+
+		SonarScanner.MSBuild.exe begin /k:"appSolid" /n:"appSolid" /v:1
+
+		msbuild C:\PROYECTOS\VisualStudioNET\APPSolidPatronesDiseño\FrmSolidPatronesDiseño.sln /t:Rebuild
+
+		SonarScanner.MSBuild.exe end
+ 
+		Nota: /k se refiere al key que identificara al proyecto, /n al nombre del proyecto y /v a la versión,
+		Una vez que se haya añadido el proyecto a la consola de administrador de SonarQube, ejemplo al http://localhost:9000, se recomienda
+		que los siguientes escaneos los realice ejecutando el comando sonar-scanner.bat
+		
+	* En caso de que le arroje el escaneo el error en la dll Microsoft.CodeAnalysis versión 1.3.1.0 descargue el Visual Studio 2015 Update 1 :
+
+		Opción 1.-https://blogs.msdn.microsoft.com/deva/2015/12/11/download-microsoft-visual-studio-2015-update-1/
+		Opción 2.-https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2015-update1-vs
+	 
+En el cmd ejecutar el archivo starSonar para inciar el servidor de Sonar:
 
 	C:\SonarQube\sonarqube-7.7\bin\windows-x86-64\StartSonar.bat
 	Nota: La ruta puede cambiar, pero el nombre del archivo es el mismo.
@@ -52,15 +83,15 @@ sonar.language=java
 		jvm 1    | 2019.04.03 14:55:04 INFO  app[][o.s.a.SchedulerImpl] Process[ce] is up
 		jvm 1    | 2019.04.03 14:55:04 INFO  app[][o.s.a.SchedulerImpl] SonarQube is up
 
-
---Para ejecutar la consola de SonarQube ejecute la siguiente url:
+Ejecutar la consola de administración de SonarQube ejecute la siguiente url:
 
 	http://localhost:9000
 
---Para que sonar escanee el proyecto y nos indique en la consola los resultados, debe ejecutar en el cmd el 
-	siguiente comando situandose dentro de la carpeta del proyecto:
+Escanear el proyecto y se indique en la consola los resultados, debe ejecutar en el cmd el 
+siguiente comando situandose dentro de la carpeta del proyecto:
 
 	C:\Proyectos\Spring\bootdocker\sonar-scanner.bat
+
 	Nota: la ruta del proyecto puede variar, pero el comando es el mismo
 		
 	
