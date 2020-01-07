@@ -10,7 +10,7 @@ Instalar SonarQubeScanner en windows descargue el zip de la siguiente url:
 	Nota: De clic sobre el link windows 64 bit
 
 Descomprimir los zip, e ir a la ruta bin de sonarscanner, copiar la ruta y agregarla en la 
-	variable path de variables de entorno:
+variable path de variables de entorno:
 
 	C:\SonarQube\sonar-scanner-cli-3.3.0.1492\bin
 	Nota: Este es un ejemplo de la ruta que se copia y pega en Path de variables de entorno
@@ -51,6 +51,7 @@ Escanear una aplicación net realice los siguientes pasos:
 
 	* Descomprima el zip de Sonar MSBuild, luego copie y pegue de preferencia en la ruta C:\SonarQube.
 	* Vaya a variables de entorno y agregue en la variable Path la ruta del Sonar MSBuild, ejemplo: C:\SonarQube\sonarqube-MSBuild.
+	* Vaya a variables de entorno y agrgue en la variable Path la ruta del msbuild.exe, ejemplo: C:\Program Files (x86)\MSBuild\14.0\Bin
 	* Abra su proyecto y ejecute el siguiente comando en la consola del administrador de paquetes:
 	
 		Install-Package Microsoft.CodeAnalysis -Version 3.4.0
