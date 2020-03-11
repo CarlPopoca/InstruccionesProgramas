@@ -1,0 +1,3 @@
+Url para la administracción de usuarios en GITLAB.
+
+https://www.adictosaltrabajo.com/2018/03/13/administrar-usuarios-gitlab-jerarquia/

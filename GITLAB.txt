@@ -1,0 +1,10 @@
+
+Registro de cuenta.
+
+Ingresar a la siguiente url para crear una cuenta, se recomienda probar primero la versión gratuita.
+
+	https://about.gitlab.com/
+
+De clic en el botón SaaS/Cloud - GitLab.com y registrese, en mi caso yo use crear mi cuenta de GitLab partiendo de mi cuenta de GitHub.
+
+

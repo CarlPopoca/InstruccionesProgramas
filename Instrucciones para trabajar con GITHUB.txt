@@ -127,6 +127,40 @@ Deshacer el último commit porque ya no desea confirmar la subida de los cambios,
 
 	git reset --hard HEAD~1
 	
+Ver con cual usuario esta configurado el GIT en su local:
+
+	 git config user.name
+
+
+----------------------------------------------------------------------------------------
+Creación de branch.
+
+Crear un branch:
+
+	git checkout -b desarrollo_11032020
+
+	Nota: desarrollo_11032020 es el nombre del branch
+
+Posicionarse en el branch creado:
+
+	git checkout desarrollo_11032020
+
+Agregar los archivos al branch:
+
+	git add --all
+
+Realizar commit de los archivos
+
+	git commit -m "Initial code branch"
+
+Confirmar los comandos ejecutados en el servidor Gitlab:
+
+	git push -u origin desarrollo_11032020
+
+	Nota: Estos comandos sustituiran en automático la liga de su código al master por el del branch, para trabajar con el master tendra que descargar el código en 
+	otra carpeta.
+
+---------------------------------------------------------------------------------------
 -----------------------------------------------------------------------
 Para hacer un merge forzado en caso que arroje el siguiente error:
 
