@@ -131,6 +131,9 @@ Ver con cual usuario esta configurado el GIT en su local:
 
 	 git config user.name
 
+Comparar archivos locales con el remoto, nos colocamos dentro de la rama que se desea comparar y se ejecuta el comando:
+
+	 git diff	
 
 ----------------------------------------------------------------------------------------
 Creación de branch.
@@ -161,7 +164,47 @@ Confirmar los comandos ejecutados en el servidor Gitlab:
 	otra carpeta.
 
 ---------------------------------------------------------------------------------------
+Eliminar Branch
+
+
+Posicionarse en el branch creado:
+
+	git checkout desarrollo_11032020
+
+Eliminación del branch:
+
+	git push origin --delete desarrollo_11032020
+
+
 -----------------------------------------------------------------------
+Hacer merge del master a un branch
+
+Posicionarse ruta del código que descargo del master:
+
+	git checkout master
+
+Realizar el merge de la rama:
+
+	git pull origin master
+
+	git merge desarrollo_11032020
+
+------------------------------------------------------------------------
+Restaurar los archivos del repositorio master sobre la local de un branch.
+
+Ir a la ruta local del código del branch, ejecutar el siguiente comando:
+
+	git fetch origin master
+	
+	git reset --hard origin/master
+
+------------------------------------------------------------------------
+Mostrar diferencias entre ramas.
+
+Ir a la ruta del branch que desea comparar con otro, y ejecute el siguiente comando:
+
+	git branch –a 
+------------------------------------------------------------------------
 Para hacer un merge forzado en caso que arroje el siguiente error:
 
 hint: Updates were rejected because the tip of your current branch is behind
