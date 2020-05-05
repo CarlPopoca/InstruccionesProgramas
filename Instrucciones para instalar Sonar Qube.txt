@@ -14,6 +14,8 @@ variable path de variables de entorno:
 
 	C:\SonarQube\sonar-scanner-cli-3.3.0.1492\bin
 	Nota: Este es un ejemplo de la ruta que se copia y pega en Path de variables de entorno
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Esta sección es para escanear una aplicación, ya sea para java o .net.
 
 Escanear una aplicación java agregue lo siguiente al archivo sonar-scanner.properties:
 
@@ -73,6 +75,7 @@ Escanear una aplicación net realice los siguientes pasos:
 
 		Opción 1.-https://blogs.msdn.microsoft.com/deva/2015/12/11/download-microsoft-visual-studio-2015-update-1/
 		Opción 2.-https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2015-update1-vs
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	 
 En el cmd ejecutar el archivo starSonar para inciar el servidor de Sonar:
 
@@ -95,7 +98,12 @@ siguiente comando situandose dentro de la carpeta del proyecto:
 
 	Nota: la ruta del proyecto puede variar, pero el comando es el mismo
 		
-	
+Encontrar proceso de sonar e windows y eliminarlo, ejecute en un cmd los siguientes comandos:
 
-
+	netstat -aon | more
 	
+	Ubique el numero del proceso.
+
+	TASKKILL /F /PID 15896	
+
+	15896 es un ejemplo de número de proceso.

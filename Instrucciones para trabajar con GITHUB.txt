@@ -215,3 +215,21 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 Ejecute la siguiente instrucción antes de hacer el push
 git pull origin master --allow-unrelated-histories
 ------------------------------------------------------------------------
+Crear submodulos en un repositorio GIT
+
+Los comandos para convertir un repositorio GIT en un submodulo de otro repositorio existente son los siguientes:
+
+	git submodule add https://github.com/chaconinc/DbConnector.git
+
+	git commit -m "Se sube submodulo"
+
+	git push -u origin master
+ 
+Algunos comandos que se pueden ejecutar después de ejecutar el comando git submodule para ver el estatus e información de los submodulos agregados son
+los siguientes:
+
+	git status
+
+	git diff --cached DbConnector
+
+	git diff --cached --submodule

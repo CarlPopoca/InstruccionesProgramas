@@ -1,0 +1,22 @@
+Descargar Postman y añadirlo en Google chrome.
+
+Ir al web store de chrome https://chrome.google.com/webstore/category/extensions?hl=es, luego en la sección de buscar escriba Postman rest client y pulse enter.
+
+Posteriormente de clic en Añadir a Chrome (el icono es el planeta tierra con una flecha verde), al finalizar la instalación se agregara el icono en el navegador 
+a un lado de la barra de dirección.
+
+Utilizar la plataforma de Mule ESB.
+
+Ir a la url https://www.mulesoft.com/platform/soa/mule-esb-open-source-esb y cree una cuenta.
+
+Descargar el Mule Studio.
+
+Ir a la https://www.mulesoft.com/lp/dl/studio con navegador firefox porque en el se visualizan los controles para poder descargarlo.
+
+
+
+
+
+
+
+ 
