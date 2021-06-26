@@ -62,8 +62,21 @@ Escanear una aplicación net realice los siguientes pasos:
 	* Abra un cmd con permisos de administrador, luego vaya a la raiz de su proyecto y ejecute los siguientes comandos:
 
 		SonarScanner.MSBuild.exe begin /k:"appSolid" /n:"appSolid" /v:1
+		SonarScanner.MSBuild.exe begin /k:"appNETNuevoCs" /n:"appNETNuevoCs" /v:1
+		SonarScanner.MSBuild.exe begin /k:"appNETViejoVb" /n:"appNETViejoVb" /v:1
+
+
 
 		msbuild C:\PROYECTOS\VisualStudioNET\APPSolidPatronesDiseño\FrmSolidPatronesDiseño.sln /t:Rebuild
+		msbuild C:\Windows XP32\Compartida\WindowsApplicationVb\WindowsApplicationVb.sln /t:Rebuild
+
+		msbuild C:\PROYECTOS\VisualStudioNET\WindowsFormsPrueba\WindowsFormsPrueba\WindowsApplicationCs.sln /t:Rebuild
+
+
+		msbuild C:\PROYECTOS\VisualStudioNET\WindowsFormsPrueba\WindowsFormsPrueba\WindowsFormsPrueba.sln /t:Rebuild
+
+				msbuild C:\Windows XP32\Compartida\WindowsApplicationVb\WindowsApplicationVb.sln /t:Rebuild
+
 
 		SonarScanner.MSBuild.exe end
  

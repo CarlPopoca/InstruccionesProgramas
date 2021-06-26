@@ -1,0 +1,7 @@
+Para buscar que procesos ocupan puertos:
+
+netstat -naob
+
+Para eliminar un proceso, el número es el PID:
+
+TASKKILL /PID 15148 /F

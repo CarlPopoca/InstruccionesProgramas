@@ -2,7 +2,9 @@
 Primero se debe configurar el usuario y el correo, abra el cmd y ejecute los siguientes comandos.
 
 	git config --global user.name "Carlos Popoca"
+	git config --global user.name "Carlos Alberto Popoca"
 	git config --global user.email popocas21@hotmail.com
+	git config --global user.email poac@praxis.com.mx"
 
 	Nota: se especifica el nombre del usuario y el correo
 
@@ -233,3 +235,44 @@ los siguientes:
 	git diff --cached DbConnector
 
 	git diff --cached --submodule
+
+-------------------------------------------------------------------------
+Renombrar un remoto
+
+	git remote rename origin old-origin
+        Nota: Recibe dos argumentos, el primero es el nombre actual y el segundo el nombre que tendra.
+
+Verificar el nombre del remoto
+
+	git remote -v
+
+-------------------------------------------------------------------------
+Renombar una rama
+
+	git branch -m new-name
+
+-------------------------------------------------------------------------
+Descargar el codigo de una rama después de haber descargado el código
+
+git branch B01-FUNCTION-22102020
+git checkout B01-FUNCTION-22102020
+git pull
+
+Si marca el error lo anterior puede intentar con:
+
+git branch B01-FUNCTION-22102020
+git branch --set-upstream-to=origin/B01-FUNCTION-22102020
+git pull
+		
+
+----------------------------------------------------------
+Modificar contraseña de Gitlab en windows
+
+Ir a Panel de Control > Panel de control\Todos los elementos de Panel de control\Administrador de credenciales
+
+Buscar la cuenta de Git y editar el password
+
+------------------------------------------------------------
+Para descargar de una rama especifica
+
+git clone --branch B05-FUNCTION-09042021-CACS http://192.168.24.204/gitlab/sist.praxis-code/cofijava.git

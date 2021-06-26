@@ -4,6 +4,10 @@
 
 mongod --version
 
+--Para entrar al shell de mongo escriba
+
+mongo
+
 --Para crear una Base de datos
 
 use Item;
