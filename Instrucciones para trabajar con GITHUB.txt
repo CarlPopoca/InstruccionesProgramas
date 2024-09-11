@@ -11,9 +11,9 @@ Primero se debe configurar el usuario y el correo, abra el cmd y ejecute los sig
 Para crear un repositorio nuevo siga los siguientes pasos:
 
 	1.-Entre con su cuenta a GITHUB
-	2.-De clic el bot髇 "+" de arriba a la derecha y seleccione la opci髇 New Repository
-	3.- Escriba un nombre, elija si es p鷅lico o privado y opcionalmente una descripci髇.
-	Nota: La opci髇 Initialize this repository with a README" regularmente se deja desmarcada
+	2.-De clic el bot贸n "+" de arriba a la derecha y seleccione la opci贸n New Repository
+	3.- Escriba un nombre, elija si es p煤blico o privado y opcionalmente una descripci贸n.
+	Nota: La opci贸n Initialize this repository with a README" regularmente se deja desmarcada
 
 Luego para subir la carpeta del codigo del proyecto ir a la carpeta donde se encuentra en el proyecto y ejecutar el
 siguiente comando.
@@ -32,7 +32,7 @@ Despues se ejecuta e siguiente comando para hacer el commit
 
 	Nota: firs commit, es el comentario qe agregara al commit
 
-Luego especifique a que repositorio de github se a馻dira todos los archivos
+Luego especifique a que repositorio de github se a帽adira todos los archivos
 
 	git remote add origin https://github.com/CarlPopoca/ejemplo.git
 	Nota: Este comando se ejecuta cuando se quiere enlazar una carpeta con un repositorio especifico, 
@@ -42,19 +42,19 @@ Y por ultimo ejecute el siguiente comando para que se comience la carga de archi
 
 	git push -u origin master
 
-	Nota:pedira el usuario y contrase馻.
+	Nota:pedira el usuario y contrase帽a.
 
 Los pasos mencionados anteriormente desde el comando GIT INIT hasta el PUSH, se ejecutaran uno por uno cuando se desee subir el contenido 
 	a un repositorio por primera vez.
 
-Para listar la configuraci髇 ejecute el siguiente comando
+Para listar la configuraci贸n ejecute el siguiente comando
 
 	git config --list
 
 Para generar clave publica para conectarse por ssh al repositorio GIT, ejecute el programa puttygen.exe,
-Luego seleccione la opci髇 SSH de parameters y de clic en el boton Generate
+Luego seleccione la opci贸n SSH de parameters y de clic en el boton Generate
 
-Para registrar la clave privada ppk en windows, abra la conexion putty, seleccione la url de github para ssh, luego en la pesta馻 
+Para registrar la clave privada ppk en windows, abra la conexion putty, seleccione la url de github para ssh, luego en la pesta帽a 
 de SSH >auth coloque la ruta del archivo ppk y de clic en el boton open, para mas detalle revise el siguiente link 
 para ver como se hace esto en windows.
 
@@ -68,7 +68,7 @@ Para verificar el estatus de su fichero, ver lo que esta trackeado ejecute el si
 
 	git status
 
-Si elige usar autenticacion ssh, que es a馻dir ip publica de ssh y registrar su clave privada en su equipo local y previamente habia descargado su codigo 
+Si elige usar autenticacion ssh, que es a帽adir ip publica de ssh y registrar su clave privada en su equipo local y previamente habia descargado su codigo 
 por http debe ejecutar el siguiente comando para especificar la ruta por ssh.
 
 	--Si es en linux
@@ -81,7 +81,7 @@ Cancelar cambios hechos aun repositorio descargado, en el cmd situese en la carp
 
 	git stash
 
-Cancelar cambios hechos a un archivo y regresar a la versi髇 anterior:
+Cancelar cambios hechos a un archivo y regresar a la versi贸n anterior:
 
 	git checkout -- nombrearchivo.extension
 
@@ -119,13 +119,13 @@ Renombrar una carpeta, situese en la ruta donde se encuentra la carpeta y ejecut
 	git commit -m "Se actualizo el nombre de la carpeta"
 	git push -u origin master
 
-A馻dir un solo archivo, situese en la ruta donde se encuentra y ejecute los siguientes pasos:
+A帽adir un solo archivo, situese en la ruta donde se encuentra y ejecute los siguientes pasos:
 
 	git add nombrearchivo
 	git commit -m "Se sube archivo"
 	git push -u origin master
 
-Deshacer el 鷏timo commit porque ya no desea confirmar la subida de los cambios, situese en la carpeta y ejecute:
+Deshacer el 煤ltimo commit porque ya no desea confirmar la subida de los cambios, situese en la carpeta y ejecute:
 
 	git reset --hard HEAD~1
 	
@@ -138,7 +138,7 @@ Comparar archivos locales con el remoto, nos colocamos dentro de la rama que se 
 	 git diff	
 
 ----------------------------------------------------------------------------------------
-Creaci髇 de branch.
+Creaci贸n de branch.
 
 Crear un branch:
 
@@ -162,7 +162,7 @@ Confirmar los comandos ejecutados en el servidor Gitlab:
 
 	git push -u origin desarrollo_11032020
 
-	Nota: Estos comandos sustituiran en autom醫ico la liga de su c骴igo al master por el del branch, para trabajar con el master tendra que descargar el c骴igo en 
+	Nota: Estos comandos sustituiran en autom谩tico la liga de su c贸digo al master por el del branch, para trabajar con el master tendra que descargar el c贸digo en 
 	otra carpeta.
 
 ---------------------------------------------------------------------------------------
@@ -173,28 +173,31 @@ Posicionarse en el branch creado:
 
 	git checkout desarrollo_11032020
 
-Eliminaci髇 del branch:
+Eliminaci贸n del branch:
 
 	git push origin --delete desarrollo_11032020
 
 
 -----------------------------------------------------------------------
-Hacer merge del master a un branch
+Hacer merge del master desde un branch.
+Es decir el master no tiene los cambios del branch y queremos pasarlos del branch al master.
 
-Posicionarse ruta del c骴igo que descargo del master:
+Posicionarse ruta del c贸digo que descargo del master:
 
 	git checkout master
 
-Realizar el merge de la rama:
+Descargamos la 煤ltima versi贸n del master:
 
 	git pull origin master
+
+Pasamos los cambios que hay del branch al master. Lo que sucedera es que en su carpeta local descargara y hara merge de los cambios que hay en la branch
 
 	git merge desarrollo_11032020
 
 ------------------------------------------------------------------------
 Restaurar los archivos del repositorio master sobre la local de un branch.
 
-Ir a la ruta local del c骴igo del branch, ejecutar el siguiente comando:
+Ir a la ruta local del c贸digo del branch, ejecutar el siguiente comando:
 
 	git fetch origin master
 	
@@ -205,7 +208,7 @@ Mostrar diferencias entre ramas.
 
 Ir a la ruta del branch que desea comparar con otro, y ejecute el siguiente comando:
 
-	git branch 朼 
+	git branch 鈥揳 
 ------------------------------------------------------------------------
 Para hacer un merge forzado en caso que arroje el siguiente error:
 
@@ -214,7 +217,7 @@ hint: its remote counterpart. Integrate the remote changes (e.g.
 hint: 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
-Ejecute la siguiente instrucci髇 antes de hacer el push
+Ejecute la siguiente instrucci贸n antes de hacer el push
 git pull origin master --allow-unrelated-histories
 ------------------------------------------------------------------------
 Crear submodulos en un repositorio GIT
@@ -227,7 +230,7 @@ Los comandos para convertir un repositorio GIT en un submodulo de otro repositor
 
 	git push -u origin master
  
-Algunos comandos que se pueden ejecutar despu閟 de ejecutar el comando git submodule para ver el estatus e informaci髇 de los submodulos agregados son
+Algunos comandos que se pueden ejecutar despu茅s de ejecutar el comando git submodule para ver el estatus e informaci贸n de los submodulos agregados son
 los siguientes:
 
 	git status
@@ -252,7 +255,7 @@ Renombar una rama
 	git branch -m new-name
 
 -------------------------------------------------------------------------
-Descargar el codigo de una rama despu閟 de haber descargado el c骴igo
+Descargar el codigo de una rama despu茅s de haber descargado el c贸digo
 
 git branch B01-FUNCTION-22102020
 git checkout B01-FUNCTION-22102020
@@ -266,7 +269,7 @@ git pull
 		
 
 ----------------------------------------------------------
-Modificar contrase馻 de Gitlab en windows
+Modificar contrase帽a de Gitlab en windows
 
 Ir a Panel de Control > Panel de control\Todos los elementos de Panel de control\Administrador de credenciales
 
